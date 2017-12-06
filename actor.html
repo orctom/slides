@@ -1,0 +1,283 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>ASR</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-markdown>
+					<textarea data-template>
+						![preface](https://00.imgmini.eastday.com/mobile/20160708/20160708181252_2cd21b36ed966a600f1f72992a7318fd_1.jpeg)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						![preface2](https://images-na.ssl-images-amazon.com/images/I/51x-rapom8L._SX373_BO1,204,203,200_.jpg)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## The Problem
+
+						* Concurrency - tasks in local machine
+						 - Race condition
+						 - Dead lock
+						 - Blocking/Async calls
+						* Parallelizing - distributed tasks to multi-machine
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Solutions
+						
+						* Immutable
+						 - immutable objects
+						 - functional programming
+						* Actor Model - keep state internal
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Actor Model
+						
+						* Created by Carl Hewitt in 1973
+						* The first major adoption is by Ericsson in 1980s
+						 - Invented Erlang
+						 - Built a distributed, concurrent, and fault-tolerant telcom system which has 99.9999999% uptime
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Implementations
+
+						* Erlang
+						 - Ericsson millions qps
+						 - Facebook chat 70 millions concurrent users 
+						 - RabbitMQ 400,000 qps
+						 - CouchDB
+						* Scala
+						* Elixir
+						* Akka
+						* Spark / Strom ?
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Actor Model
+
+						Smallest executable unit is an actor
+						* An actor is a concurrency primitive that does not share any resources with other actors
+						* Communication - sending messages
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Key Compomnent:
+						* Behavior (processing)
+						* State (Storage)
+						* Mailbox (Message Queue)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						![actors](http://blog.scottlogic.com/rdoyle/assets/ActorModel.png)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## Keys 
+						
+						* Primitive of computations
+						* No shared state between actors
+						* Recieves messages and acts on Them, sequentially
+						* Sends messages
+						* Messages should be immutable
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Pros
+
+						* Naturally extends from concurrency inside one computer or distributed network of computers
+						* Location transparent
+						 - message-passing over the network
+						 - message serialization
+						 - actor identificators management
+						 - network connection management
+						* light-weight processes => better scaling
+						* Fault tolerance
+						* High Performance
+						* Elastic &amp; Decentralized
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Cons
+
+						* Slower than direct method invocation
+						* Shared state is needed
+						* Need to achieve global consensus
+						* Sync behavior is requried
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Akka
+						
+						* Actors within a single JVM
+						* Scala
+						* Supports pub/sub and p2p
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Creation
+
+						```
+						public class DummyActor extends UntypedActor {
+							LoggingAdapter log = Logger.getLogger(getContext().system(), this);
+
+							public void onReceive(Object message) {
+								if (message instanceof String) {
+									log.info((String) message);
+								} else {
+									unhandled(message);
+									log.info("unhandled message");
+								}
+							}
+						}
+						```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### messaging
+
+						```
+						ActorRef actor = Akka.system().actorOf(Props.create(DummyActor.class));
+						...
+						ActorRef sender = null;
+						actor.tell("hello actor!", sender);
+						```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### messaging
+
+						![tell 1](images/actor-tell-1.png)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### messaging
+
+						![tell 1](images/actor-tell-2.png)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### messaging
+
+						![tell 1](images/actor-tell-3.png)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Akka remoting
+						![actor path](http://getakka.net/images/ActorPath.png)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Akka Cluster
+						![cluster](http://prochera.com/images/blog/akka-lb-02.png)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Akka Stream
+						![stream](https://www.informatik-aktuell.de/fileadmin/templates/wr/pics/Artikel/02_Entwicklung/Programmiersprachen/Akka_abb2_akka-streams-runnable-graph.png)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Akka Stream
+						![stream](https://prismic-io.s3.amazonaws.com/zalando-jobsite/0f79690ad4ec31c4a347df734e4ebfbe376fc694_compose_nested_flow1.png)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Akka Stream
+						![stream](https://image.slidesharecdn.com/akkastreamsandhttp-150207032135-conversion-gate02/95/akka-streams-and-http-20-638.jpg?cb=1423301027)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### Akka Modules
+
+						```
+						* akka-actor – Classic Actors, Typed Actors, IO Actor etc.
+						* akka-agent – Agents, integrated with Scala STM
+						* akka-camel – Apache Camel integration
+						* akka-cluster – Cluster membership management, elastic routers.
+						* akka-kernel – Akka microkernel for running a bare-bones mini application server
+						* akka-osgi – base bundle for using Akka in OSGi containers, containing the akka-actor classes
+						* akka-osgi-aries – Aries blueprint for provisioning actor systems
+						* akka-remote – Remote Actors
+						* akka-slf4j – SLF4J Logger (event bus listener)
+						* akka-testkit – Toolkit for testing Actor systems
+						* akka-zeromq – ZeroMQ integration
+						```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						# Thanks
+					</textarea>
+				</section>	
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				math: {
+					mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+					config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+				},
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/math/math.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
