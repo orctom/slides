@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Bio Bots</title>
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown>
+				<textarea data-template>
+					# Bio Bots
+				</textarea>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+					## 万事开头难
+					
+					* 全网爬虫 -> 自有搜索引擎
+					* baidu / google ...
+				</textarea>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+					## 问题一：搜得到
+					
+					|        |    能搜到  |  搜不到      |
+					| ------ | --------- | ----------- |
+					| 有bio  | 尽量覆盖    | 想办法搜到   |
+					| 冇bio  | 结构化数据？| `¯\_(ツ)_/¯` |
+				</textarea>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+					## 问题二：耗时
+					
+					* 所有的搜索词
+					* 优先级
+					* 官网
+				</textarea>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+					## 问题三：html -> text
+					
+					* 正文 vs 噪声（处理速度，存储）
+					* 格式（段落）
+					 - `<a/> <br/>`不该换行却换行了
+					 - 纯文本，没有段落
+					 - table
+					* 自己写（lxml）
+				</textarea>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+					## 问题四：text -> bio
+
+					* 人名识别
+					 - ltp： 速度快，没有限量，内存/部署
+					 - baidu：限量的，timeout
+					* 这句话是bio吗？
+					 - 规则
+					 - 分类器
+					* 这句bio说的还是XX吗？
+					 - 田敬,2007年博士毕业于北京大学网络所,导师代亚非教授(算起来田敬博士是我同门师兄啊!)。
+				</textarea>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+					## 思考一：基于段落 vs 基于句子
+
+					* 基于段落
+					* 基于句子
+				</textarea>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+					## 问题五：哪个bio更好？
+
+					* 打分
+					 - 名字
+					 - 分类器
+					 - 规则
+					* 来源
+					 - 去除“不正经”的网站
+					* 时间顺序
+					 - 当下的org vs 过去的orgs
+				</textarea>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+					## 问题五：ta的orgs列表
+
+					* 更好的orgs -> 更好的bio
+					* bio -> ta的orgs列表
+					* orgs列表的先后顺序？
+				</textarea>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+					## 技术点：scrapy
+
+					* scrapyd （修改源码，自动注册）
+					* spider
+					 - 一个任务一个进程
+					 - 一个进程无限循环
+				</textarea>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+					## 技术点：代理/splash
+
+					* 代理：
+					 - 没有探活
+					
+					* splash
+					 - 可以渲染javascript
+					 - 有api可以探活
+					 - 消耗资源
+					 - 管理成本（重启……）TODO
+				</textarea>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+					## 技术点：
+
+					* 代理：
+					 - 没有探活
+					
+				  * splash
+					 - 可以渲染javascript
+					 - 有api可以探活
+					 - 消耗资源
+					 - 管理成本（重启……）TODO
+				</textarea>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+					# Thanks
+				</textarea>
+			</section>
+		</div>
+	</div>
+
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
+
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			math: {
+				mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+				config: 'TeX-AMS_HTML-full' // See http://docs.mathjax.org/en/latest/config-files.html
+			},
+			dependencies: [{
+					src: 'plugin/markdown/marked.js'
+				},
+				{
+					src: 'plugin/markdown/markdown.js'
+				},
+				{
+					src: 'plugin/notes/notes.js',
+					async: true
+				},
+				{
+					src: 'plugin/math/math.js',
+					async: true
+				},
+				{
+					src: 'plugin/highlight/highlight.js',
+					async: true,
+					callback: function () {
+						hljs.initHighlightingOnLoad();
+					}
+				}
+			]
+		});
+	</script>
+</body>
+
+</html>
