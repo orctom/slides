@@ -1,65 +1,67 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>ASR</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+	<title>ASR</title>
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section data-markdown>
-					<textarea data-template>
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown>
+				<textarea data-template>
 						## Introduction to ASR
 						
 						Automatic Speech Recognition
 						
 						Large Vocabulary Continues Speech Recognition
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### FFT
 
 						`time/space domain` < - > `frequency domain`
 						[Fast Fourier Transform @ wikipedia](https://en.wikipedia.org/wiki/Fast_Fourier_transform)
 						![FFT](http://www.nti-audio.com/portals/0/pic/news/FFT-Time-Frequency-View-540.png)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### GMM
 
 						A parametric probability density function represented as a weighted sum of Gaussian component densities.
 						[Gaussian Mixture Models (pdf)](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.208.1887&amp;rep=rep1&amp;type=pdf)
 						![GMM](http://dirichletprocess.weebly.com/uploads/1/9/8/4/19847957/3346416.png?1367446693)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### HMM
 
 						![HMM](https://www.researchgate.net/profile/Lingli_Zhu/publication/278639262/figure/fig3/AS:294370529038340@1447194811257/Figure-3-Structure-and-temporal-evolution-process-of-a-hidden-Markov-model-system.png)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### HMM - definition
 
 						$$ \lambda = (\pi, A, B) $$
@@ -70,9 +72,9 @@
 						* Q: Hidden States
 						* O: Observations
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### HMM - ex.
 
 						```
@@ -93,16 +95,16 @@
 						}
 						```
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### HMM - ex.
 
 						![HMM](http://lh3.googleusercontent.com/-VOH2Y93lNVo/Vc5WSeV6BQI/AAAAAAAABXo/6x_hS1lYgv0/im_thumb%25255B1%25255D.jpg?imgmax=800)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### HMM - problems
 
 						* Evaluation (Likelihood): Given an HMM λ = (A,B) and an observation sequence
@@ -114,16 +116,16 @@ in the HMM, learn the HMM parameters A and B. (`Baum-Welch`)
 
 						[Hidden Markov Modles @ Stanford](https://web.stanford.edu/~jurafsky/slp3/9.pdf)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### ASR Overview
 
-						![architecture](images/asr-architecture.jpg)
+						![architecture](images/asr/asr-architecture.jpg)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### Acoustic Preprocessing
 
 						* PCM (Wave w/o header)
@@ -132,9 +134,9 @@ in the HMM, learn the HMM parameters A and B. (`Baum-Welch`)
 						* FFT
 						* Feature Extractiion (MFCC / PLP)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						#### Sampling
 						
 						* Frequency: 16KHz
@@ -142,35 +144,35 @@ in the HMM, learn the HMM parameters A and B. (`Baum-Welch`)
 
 						![sampling](https://ehomerecordingstudio.com/wp-content/uploads/2014/10/sample-rate-diagram-e1419705288132.png)
 					</textarea>
-				</section>
-				<section data-markdown data-background-color="#000">
-					<textarea data-template>
+			</section>
+			<section data-markdown data-background-color="#000">
+				<textarea data-template>
 						#### Feature Extraction
 
-						![feature extraction](images/asr-feature-extraction.png)
+						![feature extraction](images/asr/asr-feature-extraction.png)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						#### Decoding - Acoustic Models
 						Phone (phoneme)
 				
 						* A phone is a basic unit of speech
 						* Recognize words we never saw during training
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						#### Decoding - Acoustic Models
 
 						* Describes how sequences of fundamental speech units (phones) are used to represent larger speech units (words or phrases) that are the object of speech recognition
 						* Predicts the most likely sequence of phones uttered.
 						* Models the transition between `speech representation` (features) and `states` (of phones)
 					</textarea>
-				</section>
+			</section>
 
-				<section data-markdown>
-					<textarea data-template>
+			<section data-markdown>
+				<textarea data-template>
 						#### Decoding - Acoustic Models
 				
 						* GMM-HMM
@@ -178,30 +180,30 @@ in the HMM, learn the HMM parameters A and B. (`Baum-Welch`)
 						 * GMM models the emission of each state
 						* monophone model -> triphone model
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						![AM](https://image.slidesharecdn.com/dlsl2017d3l2speechrecognitioni-170127183702/95/speech-recognition-with-deep-neural-networks-d3l2-deep-learning-for-speech-and-language-upc-2017-11-638.jpg?cb=1485544422)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						#### Decoding - Acoustic Models
 						features -> states -> phones (-> word -> sentence)
 
-						![AM](images/asr-am.png)
+						![AM](images/asr/asr-am.png)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						#### Decoding - Acoustic Models
 						HMM per phone / triphone
 
-						![phones](images/asr-triphone.png)
+						![phones](images/asr/asr-triphone.png)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						#### Decoding - Lexicon Models
 				
 						* Maps phone pronunciations of words.
@@ -214,9 +216,9 @@ in the HMM, learn the HMM parameters A and B. (`Baum-Welch`)
 						THE DH IY
 						```
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						#### Decoding - Language Models
 				
 						* Provide an estimate of the like- lihood of a certain observation sequence of words.
@@ -227,85 +229,101 @@ in the HMM, learn the HMM parameters A and B. (`Baum-Welch`)
 						Write a letter to Mrs. Wright, right now.
 						```
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						#### Decoding - Search
 						ASR search is the same as searching for the lowest-cost path in a graph.
 				
 						* Usually perform `Viterbi` search, for best state sequence.
 						* Nodes in the graph correspond to entries in a `Dynamic Programming` chart.
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						#### Decoding - WFST
 				
 						* WFST (Weighted Finite State Transducer)
 						
 						![HMMs](http://www.opasquet.fr/wp-content/uploads/searchgraph.jpg)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						#### Training - Acoustic Models
 				
 						* EM (Expectation-Maximization)
 					</textarea>
-				</section>				
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### Recap
 				
 						![asr-overall](http://ispl3290.cafe24.com/data/editor/1504/searching_8pdyQcCEBCz.jpg)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### Recap
 				
-						![overview](images/asr-overview.png)
+						![overview](images/asr/asr-overview.png)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### Recap - equation
 				
-						![equation](images/asr-equation.png)
+						![equation](images/asr/asr-equation.png)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### New Approaches
 				
 						* HMM-GMM -> HMM-DNN
 						* HMM-DNN -> RNN
 						* CTC (Connectionist Temporal Classification)
 					</textarea>
-				</section>
-			</div>
+			</section>
 		</div>
+	</div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				math: {
-					mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
-					config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			math: {
+				mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+				config: 'TeX-AMS_HTML-full' // See http://docs.mathjax.org/en/latest/config-files.html
+			},
+			dependencies: [{
+					src: 'plugin/markdown/marked.js'
 				},
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/math/math.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+				{
+					src: 'plugin/markdown/markdown.js'
+				},
+				{
+					src: 'plugin/notes/notes.js',
+					async: true
+				},
+				{
+					src: 'plugin/math/math.js',
+					async: true
+				},
+				{
+					src: 'plugin/highlight/highlight.js',
+					async: true,
+					callback: function () {
+						hljs.initHighlightingOnLoad();
+					}
+				}
+			]
+		});
+	</script>
+</body>
+
 </html>

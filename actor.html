@@ -1,41 +1,43 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>ASR</title>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+	<title>ASR</title>
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section data-markdown>
-					<textarea data-template>
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown>
+				<textarea data-template>
 						![preface](https://00.imgmini.eastday.com/mobile/20160708/20160708181252_2cd21b36ed966a600f1f72992a7318fd_1.jpeg)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
-						![preface2](https://images-na.ssl-images-amazon.com/images/I/51x-rapom8L._SX373_BO1,204,203,200_.jpg)
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+						![preface2](https://images-na.ssl-images-amazon.com/images/actor/I/51x-rapom8L._SX373_BO1,204,203,200_.jpg)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						## The Problem
 
 						* Concurrency - tasks in local machine
@@ -44,9 +46,9 @@
 						 - Blocking/Async calls
 						* Parallelizing - distributed tasks to multi-machine
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						## Solutions
 						
 						* Immutable
@@ -54,9 +56,9 @@
 						 - functional programming
 						* Actor Model - keep state internal
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						## Actor Model
 						
 						* Created by Carl Hewitt in 1973
@@ -64,9 +66,9 @@
 						 - Invented Erlang
 						 - Built a distributed, concurrent, and fault-tolerant telcom system which has 99.9999999% uptime
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### Implementations
 
 						* Erlang
@@ -79,31 +81,31 @@
 						* Akka
 						* Spark / Strom ?
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						## Actor Model
 
 						Smallest executable unit is an actor
 						* An actor is a concurrency primitive that does not share any resources with other actors
 						* Communication - sending messages
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						## Key Compomnent:
 						* Behavior (processing)
 						* State (Storage)
 						* Mailbox (Message Queue)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						![actors](http://blog.scottlogic.com/rdoyle/assets/ActorModel.png)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						## Keys 
 						
 						* Primitive of computations
@@ -112,9 +114,9 @@
 						* Sends messages
 						* Messages should be immutable
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### Pros
 
 						* Naturally extends from concurrency inside one computer or distributed network of computers
@@ -128,9 +130,9 @@
 						* High Performance
 						* Elastic &amp; Decentralized
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### Cons
 
 						* Slower than direct method invocation
@@ -138,18 +140,18 @@
 						* Need to achieve global consensus
 						* Sync behavior is requried
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### Akka
 						
 						* Actors within a single JVM
 						* Scala
 						* Supports pub/sub and p2p
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### Creation
 
 						```
@@ -167,9 +169,9 @@
 						}
 						```
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### messaging
 
 						```
@@ -179,60 +181,60 @@
 						actor.tell("hello actor!", sender);
 						```
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### messaging
 
-						![tell 1](images/actor-tell-1.png)
+						![tell 1](images/actor/actor-tell-1.png)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### messaging
 
-						![tell 1](images/actor-tell-2.png)
+						![tell 1](images/actor/actor-tell-2.png)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### messaging
 
-						![tell 1](images/actor-tell-3.png)
+						![tell 1](images/actor/actor-tell-3.png)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### Akka remoting
-						![actor path](http://getakka.net/images/ActorPath.png)
+						![actor path](http://getakka.net/images/actor/ActorPath.png)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### Akka Cluster
-						![cluster](http://prochera.com/images/blog/akka-lb-02.png)
+						![cluster](http://prochera.com/images/actor/blog/akka-lb-02.png)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### Akka Stream
 						![stream](https://www.informatik-aktuell.de/fileadmin/templates/wr/pics/Artikel/02_Entwicklung/Programmiersprachen/Akka_abb2_akka-streams-runnable-graph.png)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### Akka Stream
 						![stream](https://prismic-io.s3.amazonaws.com/zalando-jobsite/0f79690ad4ec31c4a347df734e4ebfbe376fc694_compose_nested_flow1.png)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### Akka Stream
 						![stream](https://image.slidesharecdn.com/akkastreamsandhttp-150207032135-conversion-gate02/95/akka-streams-and-http-20-638.jpg?cb=1423301027)
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						### Akka Modules
 
 						```
@@ -249,35 +251,51 @@
 						* akka-zeromq – ZeroMQ integration
 						```
 					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
 						# Thanks
 					</textarea>
-				</section>	
-			</div>
+			</section>
 		</div>
+	</div>
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+	<script src="lib/js/head.min.js"></script>
+	<script src="js/reveal.js"></script>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				math: {
-					mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
-					config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			math: {
+				mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+				config: 'TeX-AMS_HTML-full' // See http://docs.mathjax.org/en/latest/config-files.html
+			},
+			dependencies: [{
+					src: 'plugin/markdown/marked.js'
 				},
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/math/math.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+				{
+					src: 'plugin/markdown/markdown.js'
+				},
+				{
+					src: 'plugin/notes/notes.js',
+					async: true
+				},
+				{
+					src: 'plugin/math/math.js',
+					async: true
+				},
+				{
+					src: 'plugin/highlight/highlight.js',
+					async: true,
+					callback: function () {
+						hljs.initHighlightingOnLoad();
+					}
+				}
+			]
+		});
+	</script>
+</body>
+
 </html>

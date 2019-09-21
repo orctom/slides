@@ -1,0 +1,728 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Machine Learning Quick Start</title>
+
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/league.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/monokai.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+
+	<!-- ruleJS -->
+	<script async defer src="https://buttons.github.io/buttons.js"></script>
+	<script src="plugin/spreadsheet/ruleJS.all.full.min.js"></script>
+	<link rel="stylesheet" href="plugin/spreadsheet/spreadsheet.css">
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown data-background="images/ml/bg.jpeg">
+				<script type="text/template">
+					# 机器学习理论与应用
+				</script>
+			</section>
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						## 机器学习是怎么一回事？
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 房价预测问题（Andrew NG）
+						
+						| Size of feets^2 (x) | Price($) in 1000's (y) |
+						| ------------------- | ---------------------- |
+						| 2104                | 460                    |
+						| 1416                | 232                    |
+						| 1534                | 315                    |
+						| ...                 | ...                    |
+
+						Note:
+						One Variable (Feature)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						![](images/ml/house-price-prediction-01.png)
+
+						<p class="fragment">$$ h = h_\theta $$</p>
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						![](images/ml/house-price-prediction-02.png)
+
+						<p class="fragment">$$ h_\theta(x) = \theta_0 + \theta_1x $$</p>
+
+						Note:
+						像哪个数学公式的曲线？
+
+						为了方便理解，这里用直线y = ax
+
+						但这条直线可能不过（0.0），所以加一个位移变成：
+						
+						y = ax + b
+						
+						再替换一下变量名就是上面公式
+
+						如何能准确但预测房价，转换成“如何画一条直线，和房价的点的趋势最契合”
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						<img src="images/ml/house-price-prediction-03.png" width="400" height="270">
+
+						<p class="fragment">
+						$$ J(\theta_0, \theta_1) = \displaystyle \sum_{i=1}^m \left (h_\theta (x_{i}) - y_{i} \right)^2 $$
+						</p>
+
+						<p class="fragment">损失函数, (Loss / Cost / Error) Function</p>
+
+						Note:
+						解释一下损失函数
+						契合：每个点和直线之间的距离之和最小
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						![](images/ml/house-price-prediction-05.png)
+
+						假设穷尽所有的$\theta_0, \theta_1$的组合，计算$J(\theta)$，并画出来
+
+						Note:
+						然后画出等高线
+					</script>
+				</section>
+				<section data-markdown data-transition="fade">
+					<script type="text/template">
+						![](images/ml/house-price-prediction-06.png)
+						$\theta_0, \theta_1$与$J(\theta)$的关系
+					</script>
+				</section>
+				<section data-markdown data-transition="fade">
+					<script type="text/template">
+						![](images/ml/house-price-prediction-07.png)
+						$\theta_0, \theta_1$与$J(\theta)$的关系
+					</script>
+				</section>
+				<section data-markdown data-transition="fade">
+					<script type="text/template">
+						![](images/ml/house-price-prediction-08.png)
+						$\theta_0, \theta_1$与$J(\theta)$的关系
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 如何计算$\theta$？
+						
+						<p class="fragment">
+							真实的情况可能很不规则
+							<img src="images/ml/house-price-prediction-09.png">
+						</p>
+
+						Note:
+						想象你的程序是一个没有视觉功能的机器人，拿着一个长度为α的杆子
+
+						以自己为中心画一个圆，找到最低点，然后“瞬移”过去
+					</script>
+				</section>
+				<section data-markdown data-background="images/ml/mountain.jpg">
+					<script type="text/template">
+						<h2><font color="black">这山要怎么下？</font></h2>
+						<p class="fragment">
+							<img src="images/ml/gradient-descent.png">
+						</p>
+					</script>
+				</section>
+				<section data-markdown data-background="images/ml/mountain.jpg">
+					<script type="text/template">
+						![](images/ml/house-price-prediction-04.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						* 随机的选择$\theta_0, \theta_1$的值
+						* 分别调整$\theta_0, \theta_1$的值（斜率/偏导）
+						* 迭代
+						* 当$J(\theta)$的值不再减小的时候停止计算
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						![](images/ml/cost-function-iter.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 梯度下降 Gradient Descent
+						
+						![](images/ml/house-price-prediction-10.png)
+
+						`α`：学习率 (Learning Rate)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 学习率 learning rate
+						
+						![](images/ml/learning-rate.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						<img src="images/ml/gd-algo1.gif" width="400">
+						<img src="images/ml/gd-algo2.gif" width="400">
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 考虑更多因素(features)
+						<div class="spreadsheet" data-delimiter="	">
+						'Size (feet)^2'	'#bedrooms'	'#floors'	'Age (years)'	'Price ($1000)'
+						2104	5	1	45	460
+						1416	3	2	40	232
+						1534	3	2	30	315
+						852	2	1	36	178
+						...	...	...	...	...
+						</div>
+						
+						`$$ h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ... + \theta_nx_n $$`
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 考虑更多因素(features)
+
+						`$$ h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ... + \theta_nx_n $$`
+						<p class="fragment">
+							$$ \theta = \begin{pmatrix}\theta_0 \\\ \theta_1 \\\ ... \\\ \theta_n \end{pmatrix}, x = \begin{pmatrix}1 \\\ x_1 \\\ ... \\\ x_n \end{pmatrix} $$
+						</fragment>
+						<p class="fragment">$$ h_\theta(x) = \theta^Tx $$</fragment>
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 考虑非线性
+						`$$
+							h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ... + \theta_nx_n \\
+							\downarrow \\
+							h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2^2 + \theta_3x_3^3 + ... + \theta_nx_n^n \\
+						$$`
+						$$ h_\theta(x) = \theta^Tx $$
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## recap
+						数据中存在潜在的规律
+						<p class="fragment">机器学习的过程就是学习到一个模型，能够表达和逼近这个潜在的规律</p>
+						<p class="fragment">是否需要更多的信息？</p>
+					</script>
+				</section>
+			</section>
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						## 监督学习 Supervised Learning
+
+						给定一组数据{x(1), ..., x(m)} 和与其对应的输出{y(1), ..., y(m)}
+						学习到一个模型以描述如何从x预测y
+						
+						换句话说，就是需要人工标注的数据
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 监督学习种类
+
+						| 回归 Regression | 分类 Classification |
+						| -------------- | ------------------- |
+						| 输出为连续数值    | 输出为枚举           |
+						| 房价预测         | 预测房价会涨还是会跌   |
+						| 股票价格预测     | 垃圾邮件过滤          |
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 分类又是怎么实现的？
+
+						$$ h_\theta(x) = \theta^Tx $$
+						<p class="fragment">$$ h_\theta(x) = g(\theta^Tx), g(z) = \frac1{1 + e^{-z}} $$</fragment>
+						<p class="fragment">$$ h_\theta(x) = \frac1{1 + e^{-\theta^Tx}} $$ </fragment>
+					</script>
+				</section>
+				<!--
+				<section data-markdown>
+					<script type="text/template">
+						## 激活函数 Activation Functions
+						
+						![](images/ml/activation-functions.png)
+						Note:
+						解释一下激活函数
+					</script>
+				</section>
+				-->
+				<section data-markdown>
+					<script type="text/template">
+						## 模型评估 - 回归
+
+						<img src="images/ml/evaluate-regression.png" height="400">
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 模型评估 - 分类 - 混淆矩阵
+
+						![](images/ml/classification-confusion-matrix.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 模型评估 - 分类 - PR
+
+						![](images/ml/classification-accuracy.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 模型评估 - 分类 - F1
+
+						![](images/ml/f1.png)
+
+						$$ F_1 = 2\cdot\frac{precision \cdot recall}{precision + recall} $$
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 模型评估 - 分类 - 带权重F1
+
+						$$ F_\beta = \left\(1 + \beta^2\right)\frac{precision \cdot recall}{\left(\beta^2 \cdot precision\right) + recall} $$
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 举个例子
+						![](images/ml/evaluation-example.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						$$ precision = \frac{TP}{TP + FP} = \frac{100}{100 + 10} = 0.91 $$
+						$$ recall = \frac{TP}{TP + FN} = \frac{100}{100 + 5} = 0.95 $$
+						$$ F_1 = 2\cdot\frac{precision \cdot recall}{precision + recall} = 2\cdot\frac{0.91 \cdot 0.95}{0.91 + 0.95} = 0.93 $$
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						```
+									precision    recall  f1-score   support
+
+          0       0.91      0.94      0.92     27578
+          1       0.98      0.98      0.98    105331
+
+avg / total       0.97      0.97      0.97    132909
+
+[[ 25519   2147]
+ [  2643 102621]]
+```
+				  </script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 模型评估 - 分类 - 交叉熵
+
+						$$ H(p, q) = -\sum p(x)\log{q(x)} $$ 
+					</script>
+				</section>
+			</section>
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						## 常用算法
+
+						* 逻辑回归 Logistic Regression
+						* K近邻算法 KNN
+						* 决策树 Decision Tree
+						* 朴素贝叶斯 Naive Bayes
+						* 支持向量机 SVM
+						* 神经网络 
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 逻辑回归 Logistic Regression
+
+						如前例中，线性回归 + sigmoid函数
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## K近邻算法 KNN
+
+						物以类聚，人以群分
+
+						如果一个样本在特征空间中的k个最相似(即特征空间中最邻近)的样本中的大多数属于某一个类别，
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 决策树 Decision Tree
+				
+						* 名词：熵、信息增益、信息增益率
+						* 模型：特征选择、生成决策树、剪枝
+						* 算法：ID3、C4.5、CART
+
+						随机森林(Random Forest)：多个决策树投票
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 朴素贝叶斯 Naive Bayes
+						
+						“朴素”，表示所有特征变量间相互独立，不会影响彼此
+
+						哪个类别相应特征出现得最多，就把它放到哪个类别里
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 支持向量机 SVM
+						
+						最大化分类间隔
+
+						![](images/ml/svm.png)
+					</script>
+				</section>
+			</section>
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						## misc
+
+						![](images/ml/how-flow.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## misc - 数据划分
+
+						![](images/ml/dataset-splits.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## misc - 交叉验证
+
+						* 流出法 Hold out：把数据分成互斥的训练集和测试集
+						* 交叉验证 Cross validation：把数据集分成k个大小相同的数据集，每次用k-1个数据集训练，剩下的一个做测试
+						* 自助法 Bootstrapping：
+						![](images/ml/cross-validation.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## misc - Bias vs Variance
+
+						* Bias: 模型预测值和真实值之间的差距
+						* Variance: 给定数据点的模型预测的可变性
+						![](images/ml/fitting.png)
+					</script>
+				</section>
+			</section>
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						## 无监督学习 Unsupervised Learning
+						
+						* 不需要人工标注的数据
+						* 缺少先验知识
+						* 挖掘数据中的规律
+				  </script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						假设你在一家电商平台工作，需要对注册用户做促销，需要考虑用户的：
+
+						* 年龄
+						* 收入
+						* 兴趣/爱好
+						* 婚育状况
+						* ...
+
+						<p class="fragment">目标就是要把用户分成不同的组，分组对待</fragment>
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## k-means
+
+						![](images/ml/k-means.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## k-means
+				
+						![](images/ml/k-means.gif)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## mean shift
+
+						![](images/ml/mean-shift.gif)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## dbscan
+
+						Density-Based Spatial Clustering of Applications with Noise是一个比较有代表性的基于密度的聚类算法
+
+						![](images/ml/dbscan.gif)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						聚类的目的在于把相似的东西聚在一起，而我们并不关心这一类是什么
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						![](images/ml/unsupervised-algorithms.png)
+					</script>
+				</section>
+			</section>
+			<section data-markdown>
+				## 半监督学习 semi-supervised learning
+
+				* 未标注数据的数量远多于已标注数据的数量
+				* 未标注数据更容易获得
+			</section>
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						## 强化学习 Reinforcement Learning
+
+						不要求预先给定任何数据，而是通过接收环境对动作的奖励（反馈）获得学习信息并更新模型参数
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 和监督式学习的区别
+
+						* 监督式学习就好比你在学习的时候，有一个导师在旁边指点，他知道怎么是对的怎么是错的。
+						* 强化学习是在没有任何标签的情况下，通过先尝试做出一些行为得到一个结果，通过反馈调整之前的行为，不断重复，以得到最好的结果。
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 和非监督式学习的区别
+
+						例如在向用户推荐新闻文章的任务中
+						* 非监督式找到用户先前已经阅读过类似的文章并向他们推荐其一
+						* 强化学习将通过向用户先推荐少量的新闻，并不断获得来自用户的反馈，最后构建用户可能会喜欢的文章的“知识图”
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 类别 cont.
+						* Model-free：不尝试去理解环境, 环境给什么就是什么，一步一步等待真实世界的反馈, 再根据反馈采取下一步行动。
+						* Model-based：先理解真实世界是怎样的, 并建立一个模型来模拟现实世界的反馈，通过想象来预判断接下来将要发生的所有情况，然后选择这些想象情况中最好的那种，并依据这种情况来采取下一步的策略。它比 Model-free 多出了一个虚拟环境，还有想象力。
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 类别 cont.
+						* Policy based：通过感官分析所处的环境, 直接输出下一步要采取的各种动作的概率, 然后根据概率采取行动。
+						* Value based：输出的是所有动作的价值, 根据最高价值来选动作，这类方法不能选取连续的动作。
+						* Monte-carlo update：游戏开始后, 要等待游戏结束, 然后再总结这一回合中的所有转折点, 再更新行为准则。
+						* Temporal-difference update：在游戏进行中每一步都在更新, 不用等待游戏的结束, 这样就能边玩边学习了。
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 类别
+						* On-policy：必须本人在场, 并且一定是本人边玩边学习。
+						* Off-policy：可以选择自己玩, 也可以选择看着别人玩, 通过看别人玩来学习别人的行为准则。
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 常用算法
+	
+						* Sarsa
+						* Q learning
+						* Policy Gradients
+						* Actor-Critic
+						* Monte-carlo learning
+						* Deep-Q-Network
+					</script>
+				</section>
+			</section>
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						## 深度学习 Deep Learning
+
+						* 深度学习是基于深度神经网络的学习(DNN)
+						* 深度学习可以自动提取特征
+						* 深度学习可以采用 End-to-End 的学习方式，只需要进行很少的归一化和白化，就可以将数据交给模型去训练
+						* 效果好（表达能力强）
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 神经网络
+
+						![](images/ml/nn.png)
+					</script>
+				</section>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					![](images/ml/scope.jpg)
+				</script>
+			</section>
+			<section data-background="images/ml/types.jpg" data-background-size="contain"></section>
+			<section data-background="images/ml/algorithms.png" data-background-size="contain"></section>
+			<section data-markdown>
+				<script type="text/template">
+					<img src="images/ml/misc01.png" width="330">
+					<img src="images/ml/misc02.png" width="279">
+					<img src="images/ml/misc03.png" width="306">
+
+					> 这一本只不过是绝世武功的目录
+
+					> 那一堆才是绝世武功的秘籍
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					# Thanks
+				</script>
+			</section>
+		</div>
+	</div>
+
+	<script src="js/reveal.js"></script>
+
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			math: {
+				mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+				config: 'TeX-AMS_HTML-full', // See http://docs.mathjax.org/en/latest/config-files.html
+			},
+			menu: { // Menu works best with font-awesome installed: sudo apt-get install fonts-font-awesome
+				themes: false,
+				transitions: false,
+				markers: false,
+				hideMissingTitles: true,
+				keyboard: true,
+			},
+			sequencediagrams: {
+				theme: "simple",
+				useFragments: true,
+				initialize: (function (diagramContainer) {
+					console.log("Diagram rendered!");
+				})
+			},
+			chalkboard: { // font-awesome.min.css must be available
+				// src: "plugin/chalkboard/chalkboard.json",
+				src: null,
+				toggleChalkboardButton: {
+					left: "80px"
+				},
+				toggleNotesButton: {
+					left: "130px"
+				},
+			},
+			keyboard: {
+				67: function () {
+					RevealChalkboard.toggleNotesCanvas()
+				}, // toggle chalkboard when 'c' is pressed
+				66: function () {
+					RevealChalkboard.toggleChalkboard()
+				}, // toggle chalkboard when 'b' is pressed
+				46: function () {
+					RevealChalkboard.clear()
+				}, // clear chalkboard when 'DEL' is pressed
+				8: function () {
+					RevealChalkboard.reset()
+				}, // reset all chalkboard data when 'BACKSPACE' is pressed
+			},
+			dependencies: [{
+					src: 'plugin/markdown/marked.js'
+				},
+				{
+					src: 'plugin/markdown/markdown.js'
+				},
+				{
+					src: 'plugin/notes/notes.js',
+					async: true
+				},
+				{
+					src: 'plugin/math/math.js',
+					async: true
+				},
+				{
+					src: 'plugin/highlight/highlight.js',
+					async: true,
+					callback: function () {
+						hljs.initHighlightingOnLoad();
+					}
+				},
+				{
+					src: 'plugin/sequence-diagrams/webfont.js'
+				},
+				{
+					src: 'plugin/sequence-diagrams/snap.svg-min.js'
+				},
+				{
+					src: 'plugin/sequence-diagrams/underscore-min.js'
+				},
+				{
+					src: 'plugin/sequence-diagrams/sequence-diagram-min.js'
+				},
+				{
+					src: 'plugin/sequence-diagrams/sequence-diagrams-plugin.js'
+				},
+				{
+					src: 'plugin/zoom-js/zoom.js',
+					async: true
+				},
+				{
+					src: 'plugin/spreadsheet/spreadsheet.js'
+				},
+				{
+					src: 'plugin/menu/menu.js'
+				},
+				{
+					src: 'plugin/chalkboard/chalkboard.js'
+				},
+			]
+		});
+	</script>
+</body>
+
+</html>
