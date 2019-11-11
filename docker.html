@@ -71,19 +71,6 @@
 						* 配套设施完整 -- CI / CD, Mesos / Swarm / k8s...
 					</script>
 				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## 为什么用Docker
-
-						* 生产环境和本地开发环境一致（这个程序在我本地是好好地啊...）
-						 - GCC / JDK / Python 版本
-						 - Linux / Windows / OSX
-						* 隔离 (我的程序跑不起来了，都是xx的服务把资源都占完了)
-						* 轻量 (Docker所占的启动时间可以忽略不计)
-						* Dictation: 由文件定义（Dockerfile）
-						* 配套设施完整 -- CI / CD, Mesos / Swarm / k8s...
-					</script>
-				</section>
 			</section>
 			<section>
 				<section data-markdown>
@@ -96,16 +83,16 @@
 						## 安装
 
 						```shell
-						# linux
+						### linux
 						$ curl -fsSL https://get.docker.com | sh
 
-						# linux 用阿里云的镜像
+						### linux 用阿里云的镜像
 						$ curl -fsSL https://get.docker.com | sh -s docker --mirror Aliyun
 
-						# mac
+						### mac
 						https://hub.docker.com/editions/community/docker-ce-desktop-mac
 
-						# 把用户加到docker组，这样就不需要sudo了
+						### 把用户加到docker组，这样就不需要sudo了
 						$ sudo usermod -aG docker $USER
 						```
 					</script>
@@ -224,7 +211,6 @@
 
 						8d691f585fa8: Pull complete
 						5b07f4e08ad0: Pull complete
-						abc291867bca: Pull complete
 						Digest: sha256:922c815aa4df050d4df476e92daed4231f466acc8ee90e0e774951b0fd7195a4
 						Status: Downloaded newer image for nginx:latest
 						docker.io/library/nginx:latest
@@ -271,10 +257,10 @@
 						## docker logs
 
 						```shell
-						# 从最近10分钟开始
+						### 从最近10分钟开始
 						$ docker logs -f --since 10m <container_id>
 
-						# 从最近200行开始
+						### 从最近200行开始
 						$ docker logs -f --tail 200 <container_id>
 						```
 					</script>
@@ -303,15 +289,52 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## docker save & docker load
+						## docker cp
 
 						```shell
-						# save
+						### host to docker
+						$ docker cp path/to/file <container_id>:/target/path
+
+						### docker to host
+						$ docker cp <container_id>:/path/to/file /target/path
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## save & load
+
+						```shell
+						### save
 						$ docker save qianlima:110811 | gzip > qianlima_110811.tar.gz
 
-						# load
+						### load
 						$ gunzip -c qianlima_110811.tar.tz | docker load
 						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## volumns
+
+						```shell
+						### bind volume
+						$ docker run -v "$(pwd)"/target:/app nginx:latest
+						$ docker run --mount type=bind,source="$(pwd)"/target,target=/app nginx:latest
+						```
+
+						```shell
+						### volume
+						$ docker volume create vol-demo
+						$ docker run -v vol-demo:/app nginx:latest
+						$ docker run --mount type=bind,source=vol-demo,target=/app nginx:latest
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## volumns
+
+						[](https://docs.docker.com/storage/images/types-of-mounts-tmpfs.png)
 					</script>
 				</section>
 				<section data-markdown>
@@ -346,17 +369,42 @@
 					<script type="text/template">
 						## 举个🌰
 
-						note:
-						现场构建一个最简单的python app
+						
+						```python
+						### app/web.py
+						From flask import Flask
+						app = Flask(__name__)
+						
+						@app.route('/')
+						def hello:
+							return 'Flask running in Docker!'
+						
+						if __name == '__main__':
+							app.run(host='0.0.0.0', port=7000)
+						```
+
+						```bash
+						### Dockerfile
+						FROM registry.cn-beijing.aliyuncs.com/bailian/python:3.6
+						RUN pip install Flask
+						COPY app /app
+						WORKDIR /app
+						EXPOSE 7000
+						CMD ["python", "-m", "web"]
+						```
+
+						```bash
+						$ docker build -t demo .
+						```
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
 						## Dockerfile
 						
-						```shell
+						```bash
 						FROM registry-vpc.cn-beijing.aliyuncs.com/bailian/python:3.6
-						ADD . /app
+						COPY . /app
 						WORKDIR /app
 						
 						RUN apt-get update \
@@ -377,14 +425,41 @@
 					<script type="text/template">
 						## Dockerfile 部分指令
 
+						```
+						| command     | description                                                                    |
+						| ----------- | ------------------------------------------------------------------------------ |
+						| FROM        | FROM <image>[:<tag>] [AS <name>]                                               |
+						| RUN         | RUN <command>                                                                  |
+						| LABEL       | LABEL maintainer="chenhao@bailian.ai"                                          |
+						| EXPOSE      | EXPOSE <port> [<port>/<protocol>...]                                           |
+						| ARG         | ARG <name>[=<default value>]                                                   |
+						| ENV         | ENV <key>=<value>                                                              |
+						| COPY        | COPY files* /somedir/ (prefered)                                               |
+						| ADD         | ADD files* /somedir/ (COPY +extract tar, +url)                                 |
+						| ENTRYPOINT  | ENTRYPOINT ["executable", "param1", "param2"]                                  |
+						| CMD         | CMD ["executable","param1","param2"]                                           |
+						| VOLUME      | VOLUME ["/data"], VOLUME /data                                                 |
+						| USER        | USER <user>[:<group>], USER <UID>[:<GID>]                                      |
+						| WORKDIR     | WORKDIR /app                                                                   |
+						| ONBUILD     | 定义base image被使用时的行为                                                      |
+						| HEALTHCHECK | HEALTHCHECK --interval=5m --timeout=3s CMD curl -f http://localhost/ || exit 1 |
+						```
+
 						https://docs.docker.com/engine/reference/builder/
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 用Jenkins构建
+
+						http://confluence.bailian-ai.com/pages/viewpage.action?pageId=5963818
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
 						## .dockerignore
 
-						```text
+						```less
 						# comment
 						*/temp*
 						*/*/temp*
@@ -398,6 +473,10 @@
 
 						* 一个镜像只做一件事情（一个进程）
 						* 想办法减小镜像的大小
+						 - 减少层数
+						 - 在同一层里面删除不必要的文件
+						 - 不安装推荐的依赖 (apt install xx --no-install-recommends)
+						 - [multi-stage build](https://docs.docker.com/develop/develop-images/multistage-build/)
 					</script>
 				</section>
 			</section>
@@ -407,11 +486,112 @@
 						## Docker Compose
 					</script>
 				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## sample
+
+						```yml
+						wiki:
+						  restart: always
+						  image: synctree/mediawiki
+						  ports:
+						    - "9080:80"
+						  links:
+						    - mysql
+						  environment:
+						    - MEDIAWIKI_DB_HOST=mysql
+						    - MEDIAWIKI_DB_USER=mediawiki
+						    - MEDIAWIKI_DB_PASSWORD=mediawiki
+						
+						mysql:
+						  restart: always
+						  image: mysql
+						  ports:
+						    - "3307:3306"
+						  environment:
+						    - MYSQL_ROOT_PASSWORD=mediawiki-root
+						    - MYSQL_USER=mediawiki
+						    - MYSQL_PASSWORD=mediawiki
+						    - MYSQL_DATABASE=mediawiki
+						```
+
+						https://docs.docker.com/compose/compose-file/
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						```yml
+						version: '3.5'
+						
+						services:
+						  ha:
+						    image: traefik:1.7
+						    command: >
+						      --web
+						      --docker
+						      --docker.swarmmode
+						      --docker.watch
+						      --logLevel=DEBUG
+						    ports:
+						      - "5001:80"
+						      - "50010:8080"
+						    volumes:
+						      - /var/run/docker.sock:/var/run/docker.sock
+						      - /dev/null:/traefik.toml
+						    labels:
+						      - "traefik.enable=false"
+						    networks:
+						      - qianlima
+						    deploy:
+						      replicas: 1
+						      placement:
+						        constraints: [node.role==manager]
+						      restart_policy:
+						        condition: on-failure
+						
+						  qianlima:
+						    image: registry-vpc.cn-beijing.aliyuncs.com/bailian/qianlima:110714
+						    healthcheck:
+						      test: curl -f http://localhost:50001/_ping || exit 1
+						      interval: 30s
+						      timeout: 10s
+						      retries: 3
+						      start_period: 15s
+						    environment:
+						      - WORKER_NUM=2
+						    networks:
+						      - qianlima
+						    tmpfs:
+						      - /tmp:size=200M
+						    volumes:
+						      - type: tmpfs
+						        target: /dev/shm
+						    deploy:
+						      replicas: 6
+						      placement:
+						        constraints: [node.role==worker]
+						      labels:
+						        - "traefik.port=50001"
+						        - "traefik.frontend.rule=PathPrefixStrip:/"
+						        - "traefik.docker.network=bid_qianlima"
+						    logging:
+						      driver: "json-file"
+						      options:
+						        max-size: "200M"
+						        max-file: "3"
+						networks:
+						  qianlima:
+						    driver: overlay
+						```
+					</script>
+				</section>
 			</section>
 			<section>
 				<section data-markdown>
 					<script type="text/template">
 						## Docker Swarm
+
+						http://confluence.bailian-ai.com/display/ERAKA/docker+swarm
 					</script>
 				</section>
 			</section>
