@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-	<title>Dockers</title>
+	<title>Docker</title>
 
 	<link rel="stylesheet" href="css/reset.css">
 	<link rel="stylesheet" href="css/reveal.css">
@@ -32,15 +32,17 @@
 <body>
 	<div class="reveal">
 		<div class="slides">
-			<section data-markdown>
+			<section data-markdown data-background="images/docker/docker.png" data-background-opacity="0.3" data-background-size="contain">
 				<script type="text/template">
-					# Introduction to Docker
+					## Introduction to Docker
+
+					2019 Nov
 				</script>
 			</section>
 			<section>
 				<section data-markdown>
 					<script type="text/template">
-						## Docker是什么
+						### Docker是什么
 
 						> An open platform for developing, shipping, and running applications
 						>
@@ -49,7 +51,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## Docker是什么
+						### Docker是什么
 
 						* 一种"虚拟化技术"
 						 - VM Ware / Virtual Box...
@@ -60,7 +62,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## 为什么用Docker
+						### 为什么用Docker
 
 						* 生产环境和本地开发环境一致（这个程序在我本地是好好地啊...）
 						 - GCC / JDK / Python 版本
@@ -71,16 +73,22 @@
 						* 配套设施完整 -- CI / CD, Mesos / Swarm / k8s...
 					</script>
 				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### Google Trends
+						![](images/docker/trends.png)
+					</script>
+				</section>
 			</section>
 			<section>
 				<section data-markdown>
 					<script type="text/template">
-						## Docker的基本使用
+						### Docker的基本使用
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## 安装
+						### 安装
 
 						```shell
 						### linux
@@ -99,7 +107,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## docker version
+						### docker version
 
 						```shell
 						$ docker version
@@ -135,7 +143,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## docker -v
+						### docker -v
 
 						```shell
 						$ docker -v
@@ -150,7 +158,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## docker images
+						### docker images
 
 						```shell
 						$ docker images
@@ -164,7 +172,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## docker ps
+						### docker ps
 
 						```shell
 						$ docker ps -a
@@ -178,7 +186,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## docker search
+						### docker search
 
 						```shell
 						$ docker search nginx
@@ -196,7 +204,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## docker pull
+						### docker pull
 
 						```shell
 						$ docker pull nginx
@@ -219,7 +227,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## docker run
+						### docker run
 
 						```shell
 						$ docker run \
@@ -245,7 +253,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## docker exec
+						### docker exec
 
 						```shell
 						$ docker exec -it <container_id> sh
@@ -254,7 +262,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## docker logs
+						### docker logs
 
 						```shell
 						### 从最近10分钟开始
@@ -267,7 +275,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## docker rm
+						### docker rm
 
 						```shell
 						$ docker rm <container_id>
@@ -278,7 +286,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## docker rmi
+						### docker rmi
 
 						```shell
 						$ docker rmi <image_id>
@@ -289,7 +297,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## docker cp
+						### docker cp
 
 						```shell
 						### host to docker
@@ -302,7 +310,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## save & load
+						### save & load
 
 						```shell
 						### save
@@ -315,7 +323,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## volumns
+						### volumns
 
 						```shell
 						### bind volume
@@ -327,19 +335,19 @@
 						### volume
 						$ docker volume create vol-demo
 						$ docker run -v vol-demo:/app nginx:latest
-						$ docker run --mount type=bind,source=vol-demo,target=/app nginx:latest
+						$ docker run --mount type=volume,source=vol-demo,target=/app nginx:latest
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## volumns
+						### volumns
 
-						[](https://docs.docker.com/storage/images/types-of-mounts-tmpfs.png)
+						![](https://docs.docker.com/storage/images/types-of-mounts-volume.png)
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## bailian 私有仓库
+						### bailian 私有仓库
 
 						http://confluence.bailian-ai.com/display/ERAKA/docker
 					</script>
@@ -353,12 +361,12 @@
 			<section>
 				<section data-markdown>
 					<script type="text/template">
-						## 构建Docker镜像
+						### 构建Docker镜像
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## 只需要三步
+						### 只需要三步
 
 						* 准备好往镜像里装的程序
 						* Dockerfile: 一个文本文件
@@ -367,7 +375,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## 举个🌰
+						### 举个🌰
 
 						
 						```python
@@ -400,7 +408,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## Dockerfile
+						### Dockerfile
 						
 						```bash
 						FROM registry-vpc.cn-beijing.aliyuncs.com/bailian/python:3.6
@@ -423,7 +431,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## Dockerfile 部分指令
+						### Dockerfile 部分指令
 
 						```
 						| command     | description                                                                    |
@@ -450,14 +458,14 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## 用Jenkins构建
+						### 用Jenkins构建
 
 						http://confluence.bailian-ai.com/pages/viewpage.action?pageId=5963818
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## .dockerignore
+						### .dockerignore
 
 						```less
 						# comment
@@ -469,12 +477,11 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## 一些建议
+						### 一些建议
 
 						* 一个镜像只做一件事情（一个进程）
 						* 想办法减小镜像的大小
-						 - 减少层数
-						 - 在同一层里面删除不必要的文件
+						 - 减少层数，在同一层里面删除不必要的文件
 						 - 不安装推荐的依赖 (apt install xx --no-install-recommends)
 						 - [multi-stage build](https://docs.docker.com/develop/develop-images/multistage-build/)
 					</script>
@@ -483,13 +490,13 @@
 			<section>
 				<section data-markdown>
 					<script type="text/template">
-						## Docker Compose
+						### Docker Compose
+
+						多个容器一起完成一件事情
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## sample
-
 						```yml
 						wiki:
 						  restart: always
@@ -589,33 +596,63 @@
 			<section>
 				<section data-markdown>
 					<script type="text/template">
-						## Docker Swarm
+						### Docker Swarm
 
-						http://confluence.bailian-ai.com/display/ERAKA/docker+swarm
+						* Docker Compose + 多节点
+						 - Load balancing (ingress)
+						 - 基于健康检查的重启
+						* [Offical Tutorial](https://docs.docker.com/engine/swarm/swarm-tutorial/)
 					</script>
 				</section>
-			</section>
+				<section data-markdown>
+					<script type="text/template">
+						### 再举一个🌰
+
+						* http://confluence.bailian-ai.com/display/ERAKA/docker+swarm
+						* https://www.katacoda.com/scenario-examples/courses/environment-usages/docker-swarm
+					</script>
+				</section>
+			</section>			
 			<section>
 				<section data-markdown>
 					<script type="text/template">
-						## Kubernetes (k8s)
+						### 一些注意的点
+
+						* 限制cpu和内存:
+							- --cpus="1.5" 
+							- -m=500m
+							- (?) --memory-swap=0
+						* 如果需要使用gpu: docker run --gpus all xxx
+						* healthcheck是在容器内部执行
+						* 日志能限制一下大小可能会比较好
+						* 镜像名尽量写上版本号（tag）
 					</script>
 				</section>
 			</section>
 			<section data-markdown>
 				<script type="text/template">
-					## 学习资源
+					### 学习资源
 						
- 					* <https://docker-curriculum.com/>
-					* <https://www.katacoda.com/courses/docker>
-					* <https://training.play-with-docker.com/>
+ 					* https://docker-curriculum.com/
+					* https://www.katacoda.com/courses/docker
+					* https://training.play-with-docker.com/
 					* [Docker for Beginners](https://www.udemy.com/share/101Juc/)
 					* [Containers 101](https://www.udemy.com/share/101z3U/)
 				</script>
 			</section>
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						### 预告：Kubernetes (k8s)
+
+						（时间待定）
+					</script>
+				</section>
+			</section>
 			<section data-markdown>
 				<script type="text/template">
-					# Thanks
+					### 好了，终于结束了
+					### 可以鼓掌了
 				</script>
 			</section>
 		</div>
