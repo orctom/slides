@@ -1,0 +1,313 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Pytorch Lightning</title>
+
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/night.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/monokai.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement('link');
+		link.rel = 'stylesheet';
+		link.type = 'text/css';
+		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+
+	<!-- ruleJS -->
+	<script async defer src="https://buttons.github.io/buttons.js"></script>
+	<script src="plugin/spreadsheet/ruleJS.all.full.min.js"></script>
+	<link rel="stylesheet" href="plugin/spreadsheet/spreadsheet.css">
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<!--
+			<section data-markdown data-background="images/pytorch-lightning/lightning.jpg" data-background-opacity="0.7" data-background-size="contain">
+				<script type="text/template">
+					## Pytorch Lightning简介
+
+					2020 Jun
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### 那是个什么东西？
+					> * The lightweight PyTorch wrapper
+					> * Scale your models
+					> * Write less boilerplate
+
+					<p class="fragment">总之：帮我们更好更快的写bug</fragment>
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### 在pytorch-lightning之前
+
+					* [fastai](https://www.fast.ai/)
+					* [ignite](https://pytorch.org/ignite)
+
+					<p class="fragment">侵入性比较强，需要再学习一套api</fragment>
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					```shell
+					pip install pytorch-lightning
+					# or
+					conda install pytorch-lightning -c conda-forge
+					```
+				</script>
+			</section>
+			<section data-markdown data-background="images/pytorch-lightning/model.png" data-background-size="contain">
+				<script type="text/template">
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### prediction
+					<img src="images/pytorch-lightning/prediction.png" width="350">
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### pre-trained
+					<img src="images/pytorch-lightning/pretrained.jpeg">
+				</script>
+			</section>
+			<section data-markdown data-background="images/pytorch-lightning/dataloader.jpeg" data-background-size="contain">
+				<script type="text/template">
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### optimizer
+					<img src="images/pytorch-lightning/optimizer.jpeg">
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### loss
+					<img src="images/pytorch-lightning/loss.jpeg" width="600">
+				</script>
+			</section>
+			<section data-markdown data-background="images/pytorch-lightning/train.jpeg" data-background-size="contain">
+				<script type="text/template">
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### 如果需要使用不同的dataloader
+					```python
+					dataset = ....
+					train_dataloader = DataLoader(
+						dataset, 
+						batch_size=batch_size, 
+						num_workers=num_workers
+					)
+					trainer.fit(model, train_dataloader=train_dataloader)
+
+					# or
+					val_dataloader = ...
+					trainer.fit(
+						model, 
+						train_dataloader=train_dataloader, 
+						val_dataloader=val_dataloader
+					)
+					```
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### prepare_data
+					
+					* 下载
+					* 预处理
+
+					<p class="fragment">如果使用多个GPU，会保证只被执行一次</fragment>
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### train_dataloader, val_dataloader, test_dataloader
+					<p class="fragment">如果使用多个GPU，会保证只被执行一次</fragment>
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### 开箱即得 - 进度条
+					<img src="images/pytorch-lightning/tqdm.png">
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### 开箱即得 - weights summary
+					<img src="images/pytorch-lightning/weights-summary.png">
+				</script>
+			</section>
+			-->
+			<section data-markdown>
+				<script type="text/template">
+					### 开箱即得 - tensorboard
+					<img src="images/pytorch-lightning/tensorboard.png">
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### 开箱即得 - fp16
+					```python
+					trainer = Trainer(precision=16)
+					```
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### 开箱即得 - profiler
+					```python
+					trainer = Trainer(profiler=True)
+					```
+					<img src="images/pytorch-lightning/profiler.png">
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### 开箱即得 - 多GPU
+					```python
+					trainer = Trainer(gpus=[1,2])
+					trainer = Trainer(gpus='1,2')
+					trainer = Trainer(gpus=-1)     # all
+					```
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### 开箱即得 - 分布式 （还有很多）
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### dataloader
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					### 就这了...
+				</script>
+			</section>
+		</div>
+	</div>
+
+	<script src="js/reveal.js"></script>
+
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			math: {
+				mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+				config: 'TeX-AMS_HTML-full', // See http://docs.mathjax.org/en/latest/config-files.html
+			},
+			menu: { // Menu works best with font-awesome installed: sudo apt-get install fonts-font-awesome
+				themes: false,
+				transitions: false,
+				markers: false,
+				hideMissingTitles: true,
+				keyboard: true,
+			},
+			sequencediagrams: {
+				theme: "simple",
+				useFragments: true,
+				initialize: (function (diagramContainer) {
+					console.log("Diagram rendered!");
+				})
+			},
+			chalkboard: { // font-awesome.min.css must be available
+				// src: "plugin/chalkboard/chalkboard.json",
+				src: null,
+				toggleChalkboardButton: {
+					left: "80px"
+				},
+				toggleNotesButton: {
+					left: "130px"
+				},
+			},
+			keyboard: {
+				67: function () {
+					RevealChalkboard.toggleNotesCanvas()
+				}, // toggle chalkboard when 'c' is pressed
+				66: function () {
+					RevealChalkboard.toggleChalkboard()
+				}, // toggle chalkboard when 'b' is pressed
+				46: function () {
+					RevealChalkboard.clear()
+				}, // clear chalkboard when 'DEL' is pressed
+				8: function () {
+					RevealChalkboard.reset()
+				}, // reset all chalkboard data when 'BACKSPACE' is pressed
+			},
+			dependencies: [{
+					src: 'plugin/markdown/marked.js'
+				},
+				{
+					src: 'plugin/markdown/markdown.js'
+				},
+				{
+					src: 'plugin/notes/notes.js',
+					async: true
+				},
+				{
+					src: 'plugin/math/math.js',
+					async: true
+				},
+				{
+					src: 'plugin/highlight/highlight.js',
+					async: true,
+					callback: function () {
+						hljs.initHighlightingOnLoad();
+					}
+				},
+				{
+					src: 'plugin/sequence-diagrams/webfont.js'
+				},
+				{
+					src: 'plugin/sequence-diagrams/snap.svg-min.js'
+				},
+				{
+					src: 'plugin/sequence-diagrams/underscore-min.js'
+				},
+				{
+					src: 'plugin/sequence-diagrams/sequence-diagram-min.js'
+				},
+				{
+					src: 'plugin/sequence-diagrams/sequence-diagrams-plugin.js'
+				},
+				{
+					src: 'plugin/zoom-js/zoom.js',
+					async: true
+				},
+				{
+					src: 'plugin/spreadsheet/spreadsheet.js'
+				},
+				{
+					src: 'plugin/menu/menu.js'
+				},
+				{
+					src: 'plugin/chalkboard/chalkboard.js'
+				},
+			]
+		});
+	</script>
+</body>
+
+</html>
