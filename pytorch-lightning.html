@@ -120,14 +120,14 @@
 					<script type="text/template">
 						### 关注这些方法
 						
-						* ```__init__```
-						* ```forward```
+						* ```__init__``` *
+						* ```forward``` *
 						* ```prepare_data```
 						* ```train_dataloader```
 						* ```val_dataloader```
 						* ```test_dataloader```
-						* ```configure_optimizer```
-						* ```train_step```
+						* ```configure_optimizer``` *
+						* ```train_step``` *
 						* ```validation_step```
 	
 					</script>
@@ -140,6 +140,16 @@
 						* 预处理 (transform, split, ...)
 	
 						<p class="fragment">如果使用多个GPU，会保证只被执行一次</p>
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### @pl.data_loader
+						```python
+						@pl.data_loader  # 每个epoch不重新加载了
+						def train_dataloader(self):
+							return DataLoader(...)
+						```
 					</script>
 				</section>
 				<section data-markdown>
@@ -257,6 +267,12 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
+						### 开箱即得 - 分布式训练
+						![](images/pytorch-lightning/synced-training.gif)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
 						### 开箱即得
 						* ```Trainer(fast_dev_run=True)```
 						* ```Trainer(limit_train_batches=0.1)```
@@ -264,7 +280,6 @@
 						* ```Trainer(overfit_batches=0.01)```
 						* ```Early stopping```
 						* Auto scale batch size (`power`, `binsearch`)
-						* 分布式（跨机器）
 						* TPU
 						* ...
 					</script>
@@ -405,11 +420,40 @@
 				</section>
 			</section>
 			
-			<section data-markdown>
-				<script type="text/template">
-					### dataloader
-				</script>
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						### dataloader
+						
+						```python
+						DataLoader(
+							dataset, 
+							batch_size=batch_size, 
+							num_workers=num_workers,
+							pin_memory=pin_memory
+						)
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### num_worker = ?
+						
+						* `0`: main process
+						* `>=1`: child process(es)
+						<p class="fragment">num_worker = 4 * num_GPU</p>
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### pin_memory
+						
+						![](images/pytorch-lightning/pin_memory.png)
+					</script>
+				</section>
+				
 			</section>
+			
 			<section data-markdown>
 				<script type="text/template">
 					### 就这了...
