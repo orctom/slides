@@ -54,13 +54,18 @@
 
         <section data-markdown>
           <script type="text/template">
-            ### 在pytorch-lightning之前
-
-            * [fastai](https://www.fast.ai/)
-            * [ignite](https://pytorch.org/ignite)
+            ### 除了pytorch-lightning，还有
+            * [skorch](https://github.com/dnouri/skorch)
+            * [inferno](https://github.com/inferno-pytorch/inferno)
+            * [catalyst](https://github.com/catalyst-team/catalyst)
+            * [poutyne](https://poutyne.org/)
+            * [torchbearer](https://github.com/pytorchbearer/torchbearer)
+            * [pytoune](https://github.com/GRAAL-Research/pytoune)
+            * [pywick](https://github.com/achaiah/pywick)
             * ...
 
-            <p class="fragment">需要再学习一套api，劝退了</p>
+            <p class="fragment">很多需要再学习一套api，劝退了</p>
+            <p class="fragment">但有一些和pytorch-lightning很相似，没准更适合你</p>
           </script>
         </section>
 
@@ -116,20 +121,20 @@
             <script type="text/template">
               ### 关注这些方法
 
-              * ```__init__``` *
-              * ```forward``` *
-              * ```prepare_data```
-              * ```train_dataloader```
-              * ```val_dataloader```
-              * ```test_dataloader```
-              * ```configure_optimizer``` *
-              * ```train_step``` *
-              * ```validation_step```
+              * ```__init__()``` *
+              * ```forward()``` *
+              * ```prepare_data()```
+              * ```train_dataloader()```
+              * ```val_dataloader()```
+              * ```test_dataloader()```
+              * ```configure_optimizer()``` *
+              * ```train_step()``` *
+              * ```validation_step()```
             </script>
           </section>
           <section data-markdown>
             <script type="text/template">
-              ### prepare_data
+              ### ```prepare_data()```
 
               * 下载
               * 预处理 (transform, split, ...)
@@ -139,7 +144,7 @@
           </section>
           <section data-markdown>
             <script type="text/template">
-              ### @pl.data_loader
+              ### ```@pl.data_loader```
               ```python
               @pl.data_loader  # 每个epoch不重新加载了
               def train_dataloader(self):
@@ -174,25 +179,25 @@
         <section>
           <section data-markdown>
             <script type="text/template">
-              ### 开箱即得 - 进度条
+              ### Feature - 进度条
               <img src="images/pytorch-lightning/tqdm.png">
             </script>
           </section>
           <section data-markdown>
             <script type="text/template">
-              ### 开箱即得 - weights summary
+              ### Feature - weights summary
               <img src="images/pytorch-lightning/weights-summary.png">
             </script>
           </section>
           <section data-markdown>
             <script type="text/template">
-              ### 开箱即得 - tensorboard
+              ### Feature - tensorboard
               <img src="images/pytorch-lightning/tensorboard.png">
             </script>
           </section>
           <section data-markdown>
             <script type="text/template">
-              ### 开箱即得 - 其他可视化
+              ### Feature - 其他可视化
 
               * [MLFlow](https://mlflow.org/)
               * [Neptune.ai](https://neptune.ai/)
@@ -203,7 +208,7 @@
           </section>
           <section data-markdown>
             <script type="text/template">
-              ### 开箱即得 - fp16
+              ### Feature - fp16
               ```python
               trainer = Trainer(precision=16)
 
@@ -213,7 +218,7 @@
           </section>
           <section data-markdown>
             <script type="text/template">
-              ### 开箱即得 - profiler
+              ### Feature - profiler
               ```python
               trainer = Trainer(profiler=True)
               ```
@@ -222,7 +227,7 @@
           </section>
           <section data-markdown>
             <script type="text/template">
-              ### 开箱即得 - 多GPU
+              ### Feature - 多GPU
               ```python
               trainer = Trainer(gpus=[1,2])
               trainer = Trainer(gpus='1,2')
@@ -232,12 +237,11 @@
           </section>
           <section data-markdown>
             <script type="text/template">
-              ### 开箱即得 - Checkpoint saving
+              ### Feature - Checkpoint saving
               ```python
               trainer = Trainer(default_root_dir='/path/to/checkpoints')
 
               from pytorch_lightning.callbacks import ModelCheckpoint
-              # DEFAULTS used by the Trainer
               checkpoint_callback = ModelCheckpoint(
               	filepath=os.getcwd(),
               	save_top_k=True,
@@ -255,20 +259,24 @@
               trainer.fit(model)
               trainer.save_checkpoint("example.ckpt")
 
-              # resume
+              # load
               new_model = MyModel.load_from_checkpoint(checkpoint_path="example.ckpt")
               ```
             </script>
           </section>
           <section data-markdown>
             <script type="text/template">
-              ### 开箱即得 - 分布式训练
+              ### Feature - 分布式训练
               ![](images/pytorch-lightning/synced-training.gif)
+              ```python
+              # run with SLURM
+              Trainer(gpus=[0, 1, 2, 3], nb_gpu_nodes=2)
+              ````
             </script>
           </section>
           <section data-markdown>
             <script type="text/template">
-              ### 开箱即得
+              ### Feature
               * ```Trainer(fast_dev_run=True)```
               * ```Trainer(limit_train_batches=0.1)```
               * ```Trainer(limit_val_batches=0.01)```
@@ -304,6 +312,7 @@
           </section>
           <section data-markdown>
             <script type="text/template">
+              ### trainer args
               ```python
               class MyModel(LightningModule):
               	@staticmethod
@@ -383,17 +392,19 @@
           </section>
           <section data-markdown>
             <script type="text/template">
+              ### 都在酒（args）里了
               ```python
               # init the trainer like this
               trainer = Trainer.from_argparse_args(args, early_stopping_callback=...)
 
               # init the model with Namespace directly
-              model = MyModel(args)  # <--------
+              model = MyModel(args)
               ```
             </script>
           </section>
           <section data-markdown>
             <script type="text/template">
+              ### 保存hparams到checkpoint
               ```python
               class MyModel(LightningModule):
               	def __init__(self, layer_1_dim=128, learning_rate=1e-2, **kwargs):
@@ -446,13 +457,15 @@
           </section>
           <section data-markdown>
             <script type="text/template">
-                     ### Dataset
+              ### Dataset
 
-              * Dataset
-               - ```__getitem__()```
-               - ```__len__()```
-              * IterableDataset
-               - ```__iter__()```
+              * ```Dataset```
+               - ```__getitem__()``` （可以shuffle）
+               - ```__len__()``` （进度条好看一点）
+              * ```IterableDataset```
+               - ```__iter__()``` 
+               - 支持更大的数据集
+               - 启动速度更快
             </script>
           </section>
           <section data-markdown>
@@ -487,7 +500,7 @@
           // Menu works best with font-awesome installed: sudo apt-get install fonts-font-awesome
           themes: false,
           transitions: false,
-          markers: false,
+          markers: true,
           hideMissingTitles: true,
           keyboard: true,
         },
@@ -522,6 +535,12 @@
           8: function () {
             RevealChalkboard.reset();
           }, // reset all chalkboard data when 'BACKSPACE' is pressed
+          88: function() {
+            RevealChalkboard.colorNext()
+          },	// cycle colors forward when 'x' is pressed
+			    89: function() {
+            RevealChalkboard.colorPrev()
+          },	// cycle colors backward when 'y' is pressed
         },
         dependencies: [
           {
