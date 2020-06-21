@@ -1,599 +1,613 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <title>Pytorch Lightning</title>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/reveal.css" />
-    <link rel="stylesheet" href="css/theme/night.css" />
+	<title>Pytorch Lightning</title>
 
-    <!-- Theme used for syntax highlighting of code -->
-    <link rel="stylesheet" href="lib/css/monokai.css" />
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/reveal.css" />
+	<link rel="stylesheet" href="css/theme/night.css" />
 
-    <!-- Printing and PDF exports -->
-    <script>
-      var link = document.createElement("link");
-      link.rel = "stylesheet";
-      link.type = "text/css";
-      link.href = window.location.search.match(/print-pdf/gi) ? "css/print/pdf.css" : "css/print/paper.css";
-      document.getElementsByTagName("head")[0].appendChild(link);
-    </script>
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/monokai.css" />
 
-    <!-- ruleJS -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <script src="plugin/spreadsheet/ruleJS.all.full.min.js"></script>
-    <link rel="stylesheet" href="plugin/spreadsheet/spreadsheet.css" />
-  </head>
+	<!-- Printing and PDF exports -->
+	<script>
+		var link = document.createElement("link");
+		link.rel = "stylesheet";
+		link.type = "text/css";
+		link.href = window.location.search.match(/print-pdf/gi) ? "css/print/pdf.css" : "css/print/paper.css";
+		document.getElementsByTagName("head")[0].appendChild(link);
+	</script>
 
-  <body>
-    <div class="reveal">
-      <div class="slides">
-        <!--
-			-->
-        <section data-markdown data-background="images/pytorch-lightning/lightning.jpg" data-background-opacity="0.7" data-background-size="contain">
-          <script type="text/template">
-            ## Pytorch Lightning简介
+	<!-- ruleJS -->
+	<script async defer src="https://buttons.github.io/buttons.js"></script>
+	<script src="plugin/spreadsheet/ruleJS.all.full.min.js"></script>
+	<link rel="stylesheet" href="plugin/spreadsheet/spreadsheet.css" />
+</head>
 
-             2020 Jun
-          </script>
-        </section>
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section data-markdown data-background="images/pytorch-lightning/lightning.jpg" data-background-opacity="0.7" data-background-size="contain">
+				<script type="text/template">
+					## Pytorch Lightning安利
 
-        <section data-markdown>
-          <script type="text/template">
-            ### 那是个什么东西？
-            > * The lightweight PyTorch wrapper
-            > * Scale your models
-            > * Write less boilerplate
+					2020 Jun
+				</script>
+			</section>
 
-            <p class="fragment">总之：帮我们更好更快的写bug</p>
-          </script>
-        </section>
+			<section data-markdown>
+				<script type="text/template">
+					### 朋友，你是否有类似的困扰
+					* 功能散落在各个角落，怎么组织，结构才比较合理？
+					<p class="fragment">没有？说明你对代码要求不高</p>
+					* <p class="fragment">看别人的代码不知道东西都放在哪儿了？
+					<p class="fragment">没有？说明你看别人代码不多，或者非常非常……多</p>
+					* <p class="fragment">有些代码块在各个项目中就是简单的重复</p>
+					<p class="fragment">没有？说明你写的不多，或者想的不多</p>
+					<p class="fragment">全都没有？那你可以回去工作了，不要在这划水</p>
+				</script>
+				<!-- .element: class="fragment" style="font-size: 0.30em !important;" -->
+			</section>
 
-        <section data-markdown>
-          <script type="text/template">
-            ### 除了pytorch-lightning，还有
-            * [skorch](https://github.com/dnouri/skorch)
-            * [inferno](https://github.com/inferno-pytorch/inferno)
-            * [catalyst](https://github.com/catalyst-team/catalyst)
-            * [poutyne](https://poutyne.org/)
-            * [torchbearer](https://github.com/pytorchbearer/torchbearer)
-            * [pytoune](https://github.com/GRAAL-Research/pytoune)
-            * [pywick](https://github.com/achaiah/pywick)
-            * ...
+			<section data-markdown data-background="images/pytorch-lightning/lightning.gif" data-background-opacity="0.2" data-background-size="contain">
+				<script type="text/template">
+					### pytorch-lightning
+					> * The lightweight PyTorch wrapper
+					> * Scale your models
+					> * Write less boilerplate
 
-            <p class="fragment">很多需要再学习一套api，劝退了</p>
-            <p class="fragment">但有一些和pytorch-lightning很相似，没准更适合你</p>
-          </script>
-        </section>
+					<p class="fragment">总之：帮我们更好更快的写bug</p>
+				</script>
+			</section>
 
-        <section>
-          <section data-markdown>
-            <script type="text/template">
-              ### pytorch-lighting
-              #### 还是纯pytorch模型
-              - +模版
-              - +附加功能
-            </script>
-          </section>
-          <section data-markdown data-background="images/pytorch-lightning/model.png" data-background-size="contain">
-            <script type="text/template"></script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### prediction
-              <img src="images/pytorch-lightning/prediction.png" width="350">
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### pre-trained
-              <img src="images/pytorch-lightning/pretrained.jpeg">
-            </script>
-          </section>
-          <section data-markdown data-background="images/pytorch-lightning/dataloader.jpeg" data-background-size="contain">
-            <script type="text/template"></script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### optimizer
-              <img src="images/pytorch-lightning/optimizer.jpeg">
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### loss
-              <img src="images/pytorch-lightning/loss.jpeg" width="600">
-            </script>
-          </section>
-          <section data-markdown data-background="images/pytorch-lightning/train.jpeg" data-background-size="contain">
-            <script type="text/template"></script>
-          </section>
-          <section data-markdown data-background="images/pytorch-lightning/pt_to_pl.jpg" data-background-size="contain">
-            <script type="text/template"></script>
-          </section>
-        </section>
+			<section data-markdown>
+				<script type="text/template">
+					### 除了pytorch-lightning，还有
+					* [skorch](https://github.com/dnouri/skorch)
+					* [inferno](https://github.com/inferno-pytorch/inferno)
+					* [catalyst](https://github.com/catalyst-team/catalyst)
+					* [poutyne](https://poutyne.org/)
+					* [torchbearer](https://github.com/pytorchbearer/torchbearer)
+					* [pytoune](https://github.com/GRAAL-Research/pytoune)
+					* [pywick](https://github.com/achaiah/pywick)
+					* ...
 
-        <section>
-          <section data-markdown>
-            <script type="text/template">
-              ### 关注这些方法
+					<p class="fragment">很多需要再学习一套api，劝退了</p>
+					<p class="fragment">但有一些和pytorch-lightning很相似，没准更适合你</p>
+				</script>
+			</section>
 
-              * ```__init__()``` *
-              * ```forward()``` *
-              * ```prepare_data()```
-              * ```train_dataloader()```
-              * ```val_dataloader()```
-              * ```test_dataloader()```
-              * ```configure_optimizer()``` *
-              * ```train_step()``` *
-              * ```validation_step()```
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### ```prepare_data()```
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						### pytorch-lighting
+						#### 还是纯pytorch模型
+						- +模版
+						- +附加功能
+					</script>
+				</section>
+				<section data-markdown data-background="images/pytorch-lightning/model.png" data-background-size="contain">
+					<script type="text/template"></script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### prediction
+						<img src="images/pytorch-lightning/prediction.png" width="350">
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### pre-trained
+						<img src="images/pytorch-lightning/pretrained.jpeg">
+					</script>
+				</section>
+				<section data-markdown data-background="images/pytorch-lightning/dataloader.jpeg" data-background-size="contain">
+					<script type="text/template"></script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### optimizer
+						<img src="images/pytorch-lightning/optimizer.jpeg">
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### loss
+						<img src="images/pytorch-lightning/loss.jpeg" width="600">
+					</script>
+				</section>
+				<section data-markdown data-background="images/pytorch-lightning/train.jpeg" data-background-size="contain">
+					<script type="text/template"></script>
+				</section>
+				<section data-markdown data-background="images/pytorch-lightning/pt_to_pl.jpg" data-background-size="contain">
+					<script type="text/template"></script>
+				</section>
+			</section>
 
-              * 下载
-              * 预处理 (transform, split, ...)
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						### 关注这些方法
 
-              <p class="fragment">如果使用多个GPU，会保证只被执行一次</p>
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### ```@pl.data_loader```
-              ```python
-              @pl.data_loader  # 每个epoch不重新加载了
-              def train_dataloader(self):
-              	return DataLoader(...)
-              ```
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### 单独的dataloader
-              ```python
-              dataset = ....
-              train_dataloader = DataLoader(
-              	dataset,
-              	batch_size=batch_size,
-              	num_workers=num_workers
-              )
-              trainer.fit(model, train_dataloader=train_dataloader)
+						* ```__init__()``` *
+						* ```forward()``` *
+						* ```prepare_data()```
+						* ```train_dataloader()```
+						* ```val_dataloader()```
+						* ```test_dataloader()```
+						* ```configure_optimizer()``` *
+						* ```train_step()``` *
+						* ```validation_step()```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### ```prepare_data()```
 
-              # or
-              val_dataloader = ...
-              trainer.fit(
-              	model,
-              	train_dataloader=train_dataloader,
-              	val_dataloader=val_dataloader
-              )
-              ```
-            </script>
-          </section>
-        </section>
+						* 下载
+						* 预处理 (transform, split, ...)
 
-        <section>
-          <section data-markdown>
-            <script type="text/template">
-              ### Feature - 进度条
-              <img src="images/pytorch-lightning/tqdm.png">
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### Feature - weights summary
-              <img src="images/pytorch-lightning/weights-summary.png">
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### Feature - tensorboard
-              <img src="images/pytorch-lightning/tensorboard.png">
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### Feature - 其他可视化
+						<p class="fragment">如果使用多个GPU，会保证只被执行一次</p>
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### ```@pl.data_loader```
+						```python
+						@pl.data_loader  # 每个epoch不重新加载了
+						def train_dataloader(self):
+							return DataLoader(...)
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### 单独的dataloader
+						```python
+						dataset = ....
+						train_dataloader = DataLoader(
+							dataset,
+							batch_size=batch_size,
+							num_workers=num_workers
+						)
+						trainer.fit(model, train_dataloader=train_dataloader)
 
-              * [MLFlow](https://mlflow.org/)
-              * [Neptune.ai](https://neptune.ai/)
-              * [Comet.ml](https://www.comet.ml/site/)
-              * [Wandb](https://www.wandb.com/)
-              * [Trains](https://github.com/allegroai/trains)
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### Feature - fp16
-              ```python
-              trainer = Trainer(precision=16)
+						# or
+						val_dataloader = ...
+						trainer.fit(
+							model,
+							train_dataloader=train_dataloader,
+							val_dataloader=val_dataloader
+						)
+						```
+					</script>
+				</section>
+			</section>
 
-              trainer = Trainer(amp_level='O1')
-              ```
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### Feature - profiler
-              ```python
-              trainer = Trainer(profiler=True)
-              ```
-              <img src="images/pytorch-lightning/profiler.png">
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### Feature - 多GPU
-              ```python
-              trainer = Trainer(gpus=[1,2])
-              trainer = Trainer(gpus='1,2')
-              trainer = Trainer(gpus=-1)     # all
-              ```
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### Feature - Checkpoint saving
-              ```python
-              trainer = Trainer(default_root_dir='/path/to/checkpoints')
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						### Feature - 进度条
+						<img src="images/pytorch-lightning/tqdm.png">
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### Feature - weights summary
+						<img src="images/pytorch-lightning/weights-summary.png">
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### Feature - tensorboard
+						<img src="images/pytorch-lightning/tensorboard.png">
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### Feature - 其他可视化
 
-              from pytorch_lightning.callbacks import ModelCheckpoint
-              checkpoint_callback = ModelCheckpoint(
-              	filepath=os.getcwd(),
-              	save_top_k=True,
-              	verbose=True,
-              	monitor='val_loss',
-              	mode='min',
-              	prefix=''
-              )
-              trainer = Trainer(checkpoint_callback=checkpoint_callback)
+						* [MLFlow](https://mlflow.org/)
+						* [Neptune.ai](https://neptune.ai/)
+						* [Comet.ml](https://www.comet.ml/site/)
+						* [Wandb](https://www.wandb.com/)
+						* [Trains](https://github.com/allegroai/trains)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### Feature - fp16
+						```python
+						trainer = Trainer(precision=16)
 
-              trainer = Trainer(checkpoint_callback=False)  # disable
+						trainer = Trainer(amp_level='O1')
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### Feature - profiler
+						```python
+						trainer = Trainer(profiler=True)
+						```
+						<img src="images/pytorch-lightning/profiler.png">
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### Feature - 多GPU
+						```python
+						trainer = Trainer(gpus=[1,2])
+						trainer = Trainer(gpus='1,2')
+						trainer = Trainer(gpus=-1)     # all
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### Feature - Checkpoint saving
+						```python
+						trainer = Trainer(default_root_dir='/path/to/checkpoints')
 
-              # manual
-              model = MyModel(hparams)
-              trainer.fit(model)
-              trainer.save_checkpoint("example.ckpt")
+						from pytorch_lightning.callbacks import ModelCheckpoint
+						checkpoint_callback = ModelCheckpoint(
+							filepath=os.getcwd(),
+							save_top_k=True,
+							verbose=True,
+							monitor='val_loss',
+							mode='min',
+							prefix=''
+						)
+						trainer = Trainer(checkpoint_callback=checkpoint_callback)
 
-              # load
-              new_model = MyModel.load_from_checkpoint(checkpoint_path="example.ckpt")
-              ```
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### Feature - 分布式训练
-              ![](images/pytorch-lightning/synced-training.gif)
-              ```python
-              # run with SLURM
-              Trainer(gpus=[0, 1, 2, 3], nb_gpu_nodes=2)
-              ````
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### Feature
-              * ```Trainer(fast_dev_run=True)```
-              * ```Trainer(limit_train_batches=0.1)```
-              * ```Trainer(limit_val_batches=0.01)```
-              * ```Trainer(overfit_batches=0.01)```
-              * ```Early stopping```
-              * Auto scale batch size (`power`, `binsearch`)
-              * TPU
-              * ...
-            </script>
-          </section>
-        </section>
-        <section>
-          <section data-markdown>
-            <script type="text/template">
-              ### Namespace & hparams
+						trainer = Trainer(checkpoint_callback=False)  # disable
 
-              from argparse import ArgumentParser
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ```python
-              # trainer.py
-              parser = ArgumentParser()
-              parser.add_argument('--layer_1_dim', type=int, default=128)
-              args = parser.parse_args()
-              ```
+						# manual
+						model = MyModel(hparams)
+						trainer.fit(model)
+						trainer.save_checkpoint("example.ckpt")
 
-              ```shell
-              python trainer.py --layer_1_dim 64
-              ```
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### trainer args
-              ```python
-              class MyModel(LightningModule):
-              	@staticmethod
-              	def add_model_specific_args(parent_parser):
-              		parser = ArgumentParser(parents=[parent_parser], add_help=False)
-              		parser.add_argument('--encoder_layers', type=int, default=12)
-              		parser.add_argument('--data_path', type=str, default='/some/path')
-              		return parser
+						# load
+						new_model = MyModel.load_from_checkpoint(checkpoint_path="example.ckpt")
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### Feature - 分布式训练
+						![](images/pytorch-lightning/synced-training.gif)
+						```python
+						# run with SLURM
+						Trainer(gpus=[0, 1, 2, 3], nb_gpu_nodes=2)
+						````
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### Feature
+						* ```Trainer(fast_dev_run=True)```
+						* ```Trainer(limit_train_batches=0.1)```
+						* ```Trainer(limit_val_batches=0.01)```
+						* ```Trainer(overfit_batches=0.01)```
+						* ```Early stopping```
+						* Auto scale batch size (`power`, `binsearch`)
+						* TPU
+						* ...
+					</script>
+				</section>
+			</section>
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						### Namespace & hparams
 
-              # trainer.py
-              parser = ArgumentParser()
-              parser.add_argument('--conda_env', type=str, default='some_name')
-              parser.add_argument('--notification_email', type=str, default='will@email.com')
+						from argparse import ArgumentParser
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						```python
+						# trainer.py
+						parser = ArgumentParser()
+						parser.add_argument('--layer_1_dim', type=int, default=128)
+						args = parser.parse_args()
+						```
 
-              # add model specific args
-              parser = MyModel.add_model_specific_args(parser)
+						```shell
+						python trainer.py --layer_1_dim 64
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### trainer args
+						```python
+						class MyModel(LightningModule):
+							@staticmethod
+							def add_model_specific_args(parent_parser):
+								parser = ArgumentParser(parents=[parent_parser], add_help=False)
+								parser.add_argument('--encoder_layers', type=int, default=12)
+								parser.add_argument('--data_path', type=str, default='/some/path')
+								return parser
 
-              # add all the available trainer options to argparse
-              parser = Trainer.add_argparse_args(parser)
-              ```
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ```python
-              In [8]: args = parser.parse_args([])
-              In [9]: pprint.pprint(vars(args))
-              {'accumulate_grad_batches': 1,
-              'amp_level': 'O1',
-              'auto_lr_find': False,
-              'auto_scale_batch_size': False,
-              'auto_select_gpus': False,
-              'benchmark': False,
-              'check_val_every_n_epoch': 1,
-              'checkpoint_callback': True,
-              'default_root_dir': None,
-              'deterministic': False,
-              'distributed_backend': None,
-              'early_stop_callback': False,
-              'fast_dev_run': False,
-              'gpus': <function Trainer._arg_default at 0x125baeea0>,
-              'gradient_clip_val': 0,
-              'log_gpu_memory': None,
-              'log_save_interval': 100,
-              'logger': True,
-              'max_epochs': 1000,
-              'max_steps': None,
-              'min_epochs': 1,
-              'min_steps': None,
-              'notification_email': 'will@email.com',
-              'num_nodes': 1,
-              'num_processes': 1,
-              'num_sanity_val_steps': 2,
-              'num_tpu_cores': None,
-              'overfit_pct': 0.0,
-              'precision': 32,
-              'print_nan_grads': False,
-              'process_position': 0,
-              'profiler': None,
-              'progress_bar_callback': True,
-              'progress_bar_refresh_rate': 1,
-              'reload_dataloaders_every_epoch': False,
-              'replace_sampler_ddp': True,
-              'resume_from_checkpoint': None,
-              'row_log_interval': 10,
-              'terminate_on_nan': False,
-              'test_percent_check': 1.0,
-              'track_grad_norm': -1,
-              'train_percent_check': 1.0,
-              'truncated_bptt_steps': None,
-              'val_check_interval': 1.0,
-              'val_percent_check': 1.0,
-              'weights_save_path': None,
-              'weights_summary': 'full'}
-              ```
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### 都在酒（args）里了
-              ```python
-              # init the trainer like this
-              trainer = Trainer.from_argparse_args(args, early_stopping_callback=...)
+						# trainer.py
+						parser = ArgumentParser()
+						parser.add_argument('--conda_env', type=str, default='some_name')
+						parser.add_argument('--notification_email', type=str, default='will@email.com')
 
-              # init the model with Namespace directly
-              model = MyModel(args)
-              ```
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### 保存hparams到checkpoint
-              ```python
-              class MyModel(LightningModule):
-              	def __init__(self, layer_1_dim=128, learning_rate=1e-2, **kwargs):
-              		super().__init__()
-              		self.save_hyperparameters()  # save all to self.hparams -> checkpoint
-              		# or manually
-              		self.save_hyperparameters(['layer_1_dim', 'learning_rate'])
+						# add model specific args
+						parser = MyModel.add_model_specific_args(parser)
 
-              ## or
-              class MyModel(LightningModule):
-              	def __init__(self, hparams, *args, **kwargs):
-              		super().__init__()
-              		self.hparams = hparams
+						# add all the available trainer options to argparse
+						parser = Trainer.add_argparse_args(parser)
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						```python
+						In [8]: args = parser.parse_args([])
+						In [9]: pprint.pprint(vars(args))
+						{'accumulate_grad_batches': 1,
+						'amp_level': 'O1',
+						'auto_lr_find': False,
+						'auto_scale_batch_size': False,
+						'auto_select_gpus': False,
+						'benchmark': False,
+						'check_val_every_n_epoch': 1,
+						'checkpoint_callback': True,
+						'default_root_dir': None,
+						'deterministic': False,
+						'distributed_backend': None,
+						'early_stop_callback': False,
+						'fast_dev_run': False,
+						'gpus': <function Trainer._arg_default at 0x125baeea0>,
+						'gradient_clip_val': 0,
+						'log_gpu_memory': None,
+						'log_save_interval': 100,
+						'logger': True,
+						'max_epochs': 1000,
+						'max_steps': None,
+						'min_epochs': 1,
+						'min_steps': None,
+						'notification_email': 'will@email.com',
+						'num_nodes': 1,
+						'num_processes': 1,
+						'num_sanity_val_steps': 2,
+						'num_tpu_cores': None,
+						'overfit_pct': 0.0,
+						'precision': 32,
+						'print_nan_grads': False,
+						'process_position': 0,
+						'profiler': None,
+						'progress_bar_callback': True,
+						'progress_bar_refresh_rate': 1,
+						'reload_dataloaders_every_epoch': False,
+						'replace_sampler_ddp': True,
+						'resume_from_checkpoint': None,
+						'row_log_interval': 10,
+						'terminate_on_nan': False,
+						'test_percent_check': 1.0,
+						'track_grad_norm': -1,
+						'train_percent_check': 1.0,
+						'truncated_bptt_steps': None,
+						'val_check_interval': 1.0,
+						'val_percent_check': 1.0,
+						'weights_save_path': None,
+						'weights_summary': 'full'}
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### 都在酒（args）里了
+						```python
+						# init the trainer like this
+						trainer = Trainer.from_argparse_args(args, early_stopping_callback=...)
 
-              		self.layer_1 = torch.nn.Linear(28 * 28, self.hparams.layer_1_dim)
-              		...
-              ```
-            </script>
-          </section>
-        </section>
+						# init the model with Namespace directly
+						model = MyModel(args)
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### 保存hparams到checkpoint
+						```python
+						class MyModel(LightningModule):
+							def __init__(self, layer_1_dim=128, learning_rate=1e-2, **kwargs):
+								super().__init__()
+								self.save_hyperparameters()  # save all to self.hparams -> checkpoint
+								# or manually
+								self.save_hyperparameters(['layer_1_dim', 'learning_rate'])
 
-        <section>
-          <section data-markdown>
-            <script type="text/template">
-              ### dataloader
+						## or
+						class MyModel(LightningModule):
+							def __init__(self, hparams, *args, **kwargs):
+								super().__init__()
+								self.hparams = hparams
 
-              ```python
-              DataLoader(
-              	dataset,
-              	batch_size=batch_size,
-              	num_workers=num_workers,
-              	pin_memory=pin_memory
-              )
-              ```
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ![](images/pytorch-lightning/dataloader.png)
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### num_worker = ?
+								self.layer_1 = torch.nn.Linear(28 * 28, self.hparams.layer_1_dim)
+								...
+						```
+					</script>
+				</section>
+			</section>
 
-              * `0`: main process
-              * `>=1`: child process(es)
-              <p class="fragment">num_worker = 4 * num_GPU</p>
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### Dataset
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						### dataloader
 
-              * ```Dataset```
-               - ```__getitem__()``` （可以shuffle）
-               - ```__len__()``` （进度条好看一点）
-              * ```IterableDataset```
-               - ```__iter__()``` 
-               - 支持更大的数据集
-               - 启动速度更快
-            </script>
-          </section>
-          <section data-markdown>
-            <script type="text/template">
-              ### pin_memory
+						```python
+						DataLoader(
+							dataset,
+							batch_size=batch_size,
+							num_workers=num_workers,
+							pin_memory=pin_memory
+						)
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						![](images/pytorch-lightning/dataloader.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### num_worker = ?
 
-              ![](images/pytorch-lightning/pin_memory.png)
-            </script>
-          </section>
-        </section>
+						* `0`: main process
+						* `>=1`: child process(es)
+						<p class="fragment">num_worker = 4 * num_GPU</p>
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### Dataset
 
-        <section data-markdown>
-          <script type="text/template">
-            ### 就这了...
-          </script>
-        </section>
-      </div>
-    </div>
+						* ```Dataset```
+							- ```__getitem__()``` （支持shuffle）
+							- ```__len__()``` （进度条更好看一点）
+						* ```IterableDataset```
+							- ```__iter__()``` 
+							- 支持更大的数据集
+							- 启动速度更快
+							- 需要额外处理`num_worker >= 2`的情况
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### pin_memory
 
-    <script src="js/reveal.js"></script>
+						![](images/pytorch-lightning/pin_memory.png)
+					</script>
+				</section>
+			</section>
 
-    <script>
-      // More info about config & dependencies:
-      // - https://github.com/hakimel/reveal.js#configuration
-      // - https://github.com/hakimel/reveal.js#dependencies
-      Reveal.initialize({
-        math: {
-          mathjax: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js",
-          config: "TeX-AMS_HTML-full", // See http://docs.mathjax.org/en/latest/config-files.html
-        },
-        menu: {
-          // Menu works best with font-awesome installed: sudo apt-get install fonts-font-awesome
-          themes: false,
-          transitions: false,
-          markers: true,
-          hideMissingTitles: true,
-          keyboard: true,
-        },
-        sequencediagrams: {
-          theme: "simple",
-          useFragments: true,
-          initialize: function (diagramContainer) {
-            console.log("Diagram rendered!");
-          },
-        },
-        chalkboard: {
-          // font-awesome.min.css must be available
-          // src: "plugin/chalkboard/chalkboard.json",
-          src: null,
-          toggleChalkboardButton: {
-            left: "80px",
-          },
-          toggleNotesButton: {
-            left: "130px",
-          },
-        },
-        keyboard: {
-          67: function () {
-            RevealChalkboard.toggleNotesCanvas();
-          }, // toggle chalkboard when 'c' is pressed
-          66: function () {
-            RevealChalkboard.toggleChalkboard();
-          }, // toggle chalkboard when 'b' is pressed
-          46: function () {
-            RevealChalkboard.clear();
-          }, // clear chalkboard when 'DEL' is pressed
-          8: function () {
-            RevealChalkboard.reset();
-          }, // reset all chalkboard data when 'BACKSPACE' is pressed
-          88: function() {
-            RevealChalkboard.colorNext()
-          },	// cycle colors forward when 'x' is pressed
-			    89: function() {
-            RevealChalkboard.colorPrev()
-          },	// cycle colors backward when 'y' is pressed
-        },
-        dependencies: [
-          {
-            src: "plugin/markdown/marked.js",
-          },
-          {
-            src: "plugin/markdown/markdown.js",
-          },
-          {
-            src: "plugin/notes/notes.js",
-            async: true,
-          },
-          {
-            src: "plugin/math/math.js",
-            async: true,
-          },
-          {
-            src: "plugin/highlight/highlight.js",
-            async: true,
-            callback: function () {
-              hljs.initHighlightingOnLoad();
-            },
-          },
-          {
-            src: "plugin/sequence-diagrams/webfont.js",
-          },
-          {
-            src: "plugin/sequence-diagrams/snap.svg-min.js",
-          },
-          {
-            src: "plugin/sequence-diagrams/underscore-min.js",
-          },
-          {
-            src: "plugin/sequence-diagrams/sequence-diagram-min.js",
-          },
-          {
-            src: "plugin/sequence-diagrams/sequence-diagrams-plugin.js",
-          },
-          {
-            src: "plugin/zoom-js/zoom.js",
-            async: true,
-          },
-          {
-            src: "plugin/spreadsheet/spreadsheet.js",
-          },
-          {
-            src: "plugin/menu/menu.js",
-          },
-          {
-            src: "plugin/chalkboard/chalkboard.js",
-          },
-        ],
-      });
-    </script>
-  </body>
+			<section data-markdown>
+				<script type="text/template">
+					### 就这了...
+				</script>
+			</section>
+		</div>
+	</div>
+
+	<script src="js/reveal.js"></script>
+
+	<script>
+		// More info about config & dependencies:
+		// - https://github.com/hakimel/reveal.js#configuration
+		// - https://github.com/hakimel/reveal.js#dependencies
+		Reveal.initialize({
+			math: {
+				mathjax: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js",
+				config: "TeX-AMS_HTML-full", // See http://docs.mathjax.org/en/latest/config-files.html
+			},
+			menu: {
+				// Menu works best with font-awesome installed: sudo apt-get install fonts-font-awesome
+				themes: false,
+				transitions: false,
+				markers: true,
+				hideMissingTitles: true,
+				keyboard: true,
+			},
+			sequencediagrams: {
+				theme: "simple",
+				useFragments: true,
+				initialize: function (diagramContainer) {
+					console.log("Diagram rendered!");
+				},
+			},
+			chalkboard: {
+				// font-awesome.min.css must be available
+				// src: "plugin/chalkboard/chalkboard.json",
+				src: null,
+				toggleChalkboardButton: {
+					left: "80px",
+				},
+				toggleNotesButton: {
+					left: "130px",
+				},
+			},
+			keyboard: {
+				67: function () {
+					RevealChalkboard.toggleNotesCanvas();
+				}, // toggle chalkboard when 'c' is pressed
+				66: function () {
+					RevealChalkboard.toggleChalkboard();
+				}, // toggle chalkboard when 'b' is pressed
+				46: function () {
+					RevealChalkboard.clear();
+				}, // clear chalkboard when 'DEL' is pressed
+				8: function () {
+					RevealChalkboard.reset();
+				}, // reset all chalkboard data when 'BACKSPACE' is pressed
+				88: function () {
+					RevealChalkboard.colorNext()
+				}, // cycle colors forward when 'x' is pressed
+				89: function () {
+					RevealChalkboard.colorPrev()
+				}, // cycle colors backward when 'y' is pressed
+			},
+			dependencies: [{
+					src: "plugin/markdown/marked.js",
+				},
+				{
+					src: "plugin/markdown/markdown.js",
+				},
+				{
+					src: "plugin/notes/notes.js",
+					async: true,
+				},
+				{
+					src: "plugin/math/math.js",
+					async: true,
+				},
+				{
+					src: "plugin/highlight/highlight.js",
+					async: true,
+					callback: function () {
+						hljs.initHighlightingOnLoad();
+					},
+				},
+				{
+					src: "plugin/sequence-diagrams/webfont.js",
+				},
+				{
+					src: "plugin/sequence-diagrams/snap.svg-min.js",
+				},
+				{
+					src: "plugin/sequence-diagrams/underscore-min.js",
+				},
+				{
+					src: "plugin/sequence-diagrams/sequence-diagram-min.js",
+				},
+				{
+					src: "plugin/sequence-diagrams/sequence-diagrams-plugin.js",
+				},
+				{
+					src: "plugin/zoom-js/zoom.js",
+					async: true,
+				},
+				{
+					src: "plugin/spreadsheet/spreadsheet.js",
+				},
+				{
+					src: "plugin/menu/menu.js",
+				},
+				{
+					src: "plugin/chalkboard/chalkboard.js",
+				},
+			],
+		});
+	</script>
+</body>
+
 </html>
