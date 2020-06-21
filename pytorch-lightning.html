@@ -461,11 +461,35 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						### num_worker = ?
+						### num_workers = ?
 
 						* `0`: main process
 						* `>=1`: child process(es)
-						<p class="fragment">num_worker = 4 * num_GPU</p>
+					</script>
+				</section>
+				<section data-markdown data-background="images/pytorch-lightning/dl-b4-w0.png" data-background-size="contain">
+					<script type="text/template">
+						note: num_workers = 0
+					</script>
+				</section>
+				<section data-markdown data-background="images/pytorch-lightning/dl-b4-w1.png" data-background-size="contain">
+					<script type="text/template">
+						note: num_workers = 1
+					</script>
+				</section>
+				<section data-markdown data-background="images/pytorch-lightning/dl-b4-w2.png" data-background-size="contain">
+					<script type="text/template">
+						note: num_workers = 2
+					</script>
+				</section>
+				<section data-markdown data-background="images/pytorch-lightning/dl-b4-w4.png" data-background-size="contain">
+					<script type="text/template">
+						note: num_workers = 4
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						```num_workers = 4 * num_GPU```
 					</script>
 				</section>
 				<section data-markdown>
