@@ -1,0 +1,210 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Global Pointer</title>
+
+	<link rel="stylesheet" href="static/reveal.css">
+	<link rel="stylesheet" href="static/theme/black.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<style>
+		line {
+			stroke: white;
+		}
+
+		marker {
+			stroke: white;
+			fill: white;
+		}
+
+		.signal text {
+			fill: white;
+		}
+
+		.signal text:hover {
+			fill: white;
+		}
+
+		.actor rect,
+		.actor path {
+			fill: white;
+		}
+
+		.note rect,
+		.note path {
+			fill: white;
+		}
+
+		.align-left {
+			text-align: left;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+            <!--
+			<section data-markdown>
+				<textarea data-template>
+					# Global Pointer 用统一的方式处理嵌套和非嵌套NER
+
+					https://spaces.ac.cn/archives/8373
+				</textarea>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+                    ![](https://s1.ax1x.com/2022/04/08/L9G8k8.png)
+				</textarea>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+					## 基本思路
+
+					* 要识别文本序列长度为$n$
+					* 该序列有$\frac{n(n+1)}2$个"候选实体"
+					* 从这$\frac{n(n+1)}2$个"候选实体"里边挑出真正的实体
+
+					* m个"$\frac{n(n+1)}2$选k"的多标签分类问题
+					(m:实体类型个数,k:真实的实体)
+					* 复杂度为$O(n^2)$，但这其实是空间上的复杂度，在时间上完全可以并行，可以降到$O(n)$
+				</textarea>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					## 数学形式
+
+					<p class="fragment">向量序列 $\left[h1,h2,⋯,hn\right]$, 对于实体$\alpha$</p>
+					<p class="fragment">$q_{i,\alpha}=W_{q,\alpha}h_i+b_{q,\alpha} \Longrightarrow [q_{1,\alpha},q_{2,\alpha},\cdots,q_{n,\alpha}]$</p>
+					<p class="fragment">$k_{i,\alpha}=W_{k,\alpha}h_i+b_{k,\alpha} \Longrightarrow [k_{1,\alpha},k_{2,\alpha},\cdots,k_{n,\alpha}]$</p>
+					<p class="fragment">$\begin{equation}s_{\alpha}(i,j) = q_{i,\alpha}^{\top}k_{j,\alpha}\label{eq:s}\end{equation}$</p>
+					<p class="fragment">【用$q_{i,\alpha}$与$k_{i,\alpha}$的内积, 作为片段t[i:j]是类型为$\alpha$的实体的打分 (logits)】</p>
+				</script>
+			</section>
+            -->
+			<section>
+				<!--
+				<section data-markdown>
+					<textarea data-template>
+						## 相对位置信息对NER很重要
+
+						* 相对距离（考虑不同长短的句子）
+						* 方向（字词出现的前后顺序）
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## 三角函数位置编码
+
+						![](https://pic4.zhimg.com/80/v2-640b49e6c36a8fa577a32defd7a16cab_720w.jpg)
+
+						$$PE_t^{\top} PE_{t+k} = PE_t^{\top} PE_{t-k}$$
+						https://arxiv.org/abs/1911.04474
+						<p class="fragment">学习型位置编码呢？</p>
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## 位置编码方式
+
+						* 绝对位置编码
+						 - 三角式
+						 - 学习式
+						 - ...
+						* 相对位置编码
+						 - XLNet式
+						 - 复数式
+						 - ...
+
+						https://spaces.ac.cn/archives/8130
+					</textarea>
+				</section>
+				<section data-markdown data-auto-animate>
+					<textarea data-template>
+						## 旋转位置编码
+
+						Rotary Position Embedding (RoPE)
+
+						<p class="fragment">构造一个位置编码矩阵$\mathcal{R_i}$，满足关系$\mathcal{R_i^{\top}} \mathcal{R_j} = \mathcal{R_{j-i}}$</p>
+						<p class="fragment">代入$s_{\alpha}(i,j) = q_{i,\alpha}^{\top}k_{j,\alpha}\label{eq:s}$</p>
+						<p class="fragment">
+							$$\begin{equation} \label{eq1}
+							\begin{split}
+							s_{\alpha}(i,j) &= (\mathcal{R_i}q_{i,\alpha})^{\top}(\mathcal{R_j}k_{j,\alpha}) \\
+							                &= q_{i,\alpha}^{\top} \mathcal{R_i^{\top}}\mathcal{R_j}k_{j,\alpha} \\
+											&= q_{i,\alpha}^{\top} \mathcal{R_{j-i}}k_{j,\alpha}
+							\end{split}
+							\end{equation}$$
+						</p>
+					</textarea>
+				</section>
+				<section data-markdown data-auto-animate>
+					<textarea data-template>
+						## 旋转位置编码 (2)
+
+						$$s_{\alpha}(i,j) = q_{i,\alpha}^{\top} \mathcal{R_{j-i}}k_{j,\alpha}$$
+						<p class="align-left">也就是说, 给:</p>
+						<p class="align-left">位置为$m$的向量$q$乘上矩阵$\mathcal{R_m}$<br/>位置为$n$的向量$k$乘上矩阵$\mathcal{R_n}$</p>
+						<p class="align-left">用变换后的$Q$, $K$序列做Attention</p>
+						<p class="align-left">那么Attention就自动包含相对位置信息了</p>
+
+						https://spaces.ac.cn/archives/8265
+					</textarea>
+				</section>
+				-->
+				<section data-markdown>
+					<textarea data-template>
+						## 旋转位置编码 (3)
+
+						$$\begin{array}{c}
+						\text{人民日报NER实验结果} \\
+						{\begin{array}{c|cc|cc}
+						\hline
+						\hline
+						& \text{验证集F1} & \text{测试集F1} & \text{训练速度} & \text{预测速度}
+						\end{array}}
+						\end{array}$$
+
+						$$\begin{array}{c}
+						\text{人民日报NER实验结果} \\
+						{\begin{array}{c|cc|cc}
+						\hline
+						& \text{验证集F1} & \text{测试集F1} & \text{训练速度} & \text{预测速度}\\
+						\hline
+						\text{CRF} & 96.39\% & 95.46\% & 1\text{x} & 1\text{x}\\
+						\text{GlobalPointer (w/o RoPE)} & 54.35\% & 62.59\% & 1.61\text{x} & 1.13\text{x} \\
+						\text{GlobalPointer (w/ RoPE)}& 96.25\% & 95.51\% & 1.56\text{x} & 1.11\text{x} \\
+						\hline
+						\end{array}}
+						\end{array}$$
+					</textarea>
+				</section>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+					# ```¯\_(ツ)_/¯```
+				</textarea>
+			</section>
+		</div>
+	</div>
+
+	<script src="static/reveal.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/math/math.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+
+	<script>
+		Reveal.initialize({
+			plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+		});
+	</script>
+</body>
+
+</html>
