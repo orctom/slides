@@ -7,20 +7,11 @@
 
 	<title>ASR</title>
 
-	<link rel="stylesheet" href="css/reveal.css">
-	<link rel="stylesheet" href="css/theme/black.css">
+	<link rel="stylesheet" href="static/reveal.css">
+	<link rel="stylesheet" href="static/theme/black.css">
 
 	<!-- Theme used for syntax highlighting of code -->
 	<link rel="stylesheet" href="lib/css/zenburn.css">
-
-	<!-- Printing and PDF exports -->
-	<script>
-		var link = document.createElement('link');
-		link.rel = 'stylesheet';
-		link.type = 'text/css';
-		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-		document.getElementsByTagName('head')[0].appendChild(link);
-	</script>
 </head>
 
 <body>
@@ -29,9 +20,9 @@
 			<section data-markdown>
 				<textarea data-template>
 						## Introduction to ASR
-						
+
 						Automatic Speech Recognition
-						
+
 						Large Vocabulary Continues Speech Recognition
 					</textarea>
 			</section>
@@ -81,14 +72,14 @@
 						states = ('Rainy', 'Sunny')
 
 						observations = ('walk', 'shop', 'clean')
-						 
+
 						start_probability = {'Rainy': 0.2, 'Sunny': 0.8}
-						 
+
 						transition_probability = {
 						   'Rainy' : {'Rainy': 0.4, 'Sunny': 0.6},
 						   'Sunny' : {'Rainy': 0.3, 'Sunny': 0.7},
 						}
-						 
+
 						emission_probability = {
 						   'Rainy' : {'walk': 0.1, 'shop': 0.4, 'clean': 0.5},
 						   'Sunny' : {'walk': 0.6, 'shop': 0.3, 'clean': 0.1},
@@ -138,7 +129,7 @@ in the HMM, learn the HMM parameters A and B. (`Baum-Welch`)
 			<section data-markdown>
 				<textarea data-template>
 						#### Sampling
-						
+
 						* Frequency: 16KHz
 						* Bitrate
 
@@ -156,7 +147,7 @@ in the HMM, learn the HMM parameters A and B. (`Baum-Welch`)
 				<textarea data-template>
 						#### Decoding - Acoustic Models
 						Phone (phoneme)
-				
+
 						* A phone is a basic unit of speech
 						* Recognize words we never saw during training
 					</textarea>
@@ -174,7 +165,7 @@ in the HMM, learn the HMM parameters A and B. (`Baum-Welch`)
 			<section data-markdown>
 				<textarea data-template>
 						#### Decoding - Acoustic Models
-				
+
 						* GMM-HMM
 						 * HMM models the way phones are connected
 						 * GMM models the emission of each state
@@ -205,7 +196,7 @@ in the HMM, learn the HMM parameters A and B. (`Baum-Welch`)
 			<section data-markdown>
 				<textarea data-template>
 						#### Decoding - Lexicon Models
-				
+
 						* Maps phone pronunciations of words.
 						* [The CMU Pronouncing Dictionary](http://www.speech.cs.cmu.edu/cgi-bin/cmudict)
 
@@ -220,7 +211,7 @@ in the HMM, learn the HMM parameters A and B. (`Baum-Welch`)
 			<section data-markdown>
 				<textarea data-template>
 						#### Decoding - Language Models
-				
+
 						* Provide an estimate of the like- lihood of a certain observation sequence of words.
 						* n-gram model
 						* RNN/CNN
@@ -234,7 +225,7 @@ in the HMM, learn the HMM parameters A and B. (`Baum-Welch`)
 				<textarea data-template>
 						#### Decoding - Search
 						ASR search is the same as searching for the lowest-cost path in a graph.
-				
+
 						* Usually perform `Viterbi` search, for best state sequence.
 						* Nodes in the graph correspond to entries in a `Dynamic Programming` chart.
 					</textarea>
@@ -242,44 +233,44 @@ in the HMM, learn the HMM parameters A and B. (`Baum-Welch`)
 			<section data-markdown>
 				<textarea data-template>
 						#### Decoding - WFST
-				
+
 						* WFST (Weighted Finite State Transducer)
-						
+
 						![HMMs](http://www.opasquet.fr/wp-content/uploads/searchgraph.jpg)
 					</textarea>
 			</section>
 			<section data-markdown>
 				<textarea data-template>
 						#### Training - Acoustic Models
-				
+
 						* EM (Expectation-Maximization)
 					</textarea>
 			</section>
 			<section data-markdown>
 				<textarea data-template>
 						### Recap
-				
+
 						![asr-overall](http://ispl3290.cafe24.com/data/editor/1504/searching_8pdyQcCEBCz.jpg)
 					</textarea>
 			</section>
 			<section data-markdown>
 				<textarea data-template>
 						### Recap
-				
+
 						![overview](images/asr/asr-overview.png)
 					</textarea>
 			</section>
 			<section data-markdown>
 				<textarea data-template>
 						### Recap - equation
-				
+
 						![equation](images/asr/asr-equation.png)
 					</textarea>
 			</section>
 			<section data-markdown>
 				<textarea data-template>
 						### New Approaches
-				
+
 						* HMM-GMM -> HMM-DNN
 						* HMM-DNN -> RNN
 						* CTC (Connectionist Temporal Classification)
@@ -288,40 +279,15 @@ in the HMM, learn the HMM parameters A and B. (`Baum-Welch`)
 		</div>
 	</div>
 
-	<script src="lib/js/head.min.js"></script>
-	<script src="js/reveal.js"></script>
+	<script src="static/reveal.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/math/math.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
 
 	<script>
-		// More info about config & dependencies:
-		// - https://github.com/hakimel/reveal.js#configuration
-		// - https://github.com/hakimel/reveal.js#dependencies
 		Reveal.initialize({
-			math: {
-				mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
-				config: 'TeX-AMS_HTML-full' // See http://docs.mathjax.org/en/latest/config-files.html
-			},
-			dependencies: [{
-					src: 'plugin/markdown/marked.js'
-				},
-				{
-					src: 'plugin/markdown/markdown.js'
-				},
-				{
-					src: 'plugin/notes/notes.js',
-					async: true
-				},
-				{
-					src: 'plugin/math/math.js',
-					async: true
-				},
-				{
-					src: 'plugin/highlight/highlight.js',
-					async: true,
-					callback: function () {
-						hljs.initHighlightingOnLoad();
-					}
-				}
-			]
+			plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
 		});
 	</script>
 </body>

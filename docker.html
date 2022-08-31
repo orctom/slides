@@ -7,21 +7,11 @@
 
 	<title>Docker</title>
 
-	<link rel="stylesheet" href="css/reset.css">
-	<link rel="stylesheet" href="css/reveal.css">
-	<link rel="stylesheet" href="css/theme/night.css">
+	<link rel="stylesheet" href="static/reveal.css">
+	<link rel="stylesheet" href="static/theme/black.css">
 
 	<!-- Theme used for syntax highlighting of code -->
 	<link rel="stylesheet" href="lib/css/monokai.css">
-
-	<!-- Printing and PDF exports -->
-	<script>
-		var link = document.createElement('link');
-		link.rel = 'stylesheet';
-		link.type = 'text/css';
-		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-		document.getElementsByTagName('head')[0].appendChild(link);
-	</script>
 
 	<!-- ruleJS -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -119,7 +109,7 @@
 						 Built:             Thu Oct 17 23:44:48 2019
 						 OS/Arch:           darwin/amd64
 						 Experimental:      false
-						
+
 						Server: Docker Engine - Community
 						 Engine:
 						  Version:          19.03.4
@@ -377,16 +367,16 @@
 					<script type="text/template">
 						### 举个🌰
 
-						
+
 						```python
 						### app/web.py
 						From flask import Flask
 						app = Flask(__name__)
-						
+
 						@app.route('/')
 						def hello:
 							return 'Flask running in Docker!'
-						
+
 						if __name == '__main__':
 							app.run(host='0.0.0.0', port=7000)
 						```
@@ -409,21 +399,21 @@
 				<section data-markdown>
 					<script type="text/template">
 						### Dockerfile
-						
+
 						```bash
 						FROM registry-vpc.cn-beijing.aliyuncs.com/bailian/python:3.6
 						COPY . /app
 						WORKDIR /app
-						
+
 						RUN apt-get update \
 						  && apt-get install opencc libmariadb-dev -y --no-install-recommends \
 						  && pip install -r requirements.txt --no-cache-dir \
 						  && apt-get clean \
 						  && apt-get autoremove -y \
 						  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-						
+
 						ENV nlp_endpoint_pos=http://pos.api.bailian-ai.com:50001/pos
-						
+
 						EXPOSE 8081
 						CMD ["python", "app.py"]
 						```
@@ -509,7 +499,7 @@
 						    - MEDIAWIKI_DB_HOST=mysql
 						    - MEDIAWIKI_DB_USER=mediawiki
 						    - MEDIAWIKI_DB_PASSWORD=mediawiki
-						
+
 						mysql:
 						  restart: always
 						  image: mysql
@@ -529,7 +519,7 @@
 					<script type="text/template">
 						```yml
 						version: '3.5'
-						
+
 						services:
 						  ha:
 						    image: traefik:1.7
@@ -555,7 +545,7 @@
 						        constraints: [node.role==manager]
 						      restart_policy:
 						        condition: on-failure
-						
+
 						  qianlima:
 						    image: registry-vpc.cn-beijing.aliyuncs.com/bailian/qianlima:110714
 						    healthcheck:
@@ -612,14 +602,14 @@
 						* https://www.katacoda.com/scenario-examples/courses/environment-usages/docker-swarm
 					</script>
 				</section>
-			</section>			
+			</section>
 			<section>
 				<section data-markdown>
 					<script type="text/template">
 						### 一些注意的点
 
 						* 限制cpu和内存:
-							- --cpus="1.5" 
+							- --cpus="1.5"
 							- -m=500m
 							- (?) --memory-swap=0
 						* 如果需要使用gpu: docker run --gpus all xxx
@@ -632,7 +622,7 @@
 			<section data-markdown>
 				<script type="text/template">
 					### 学习资源
-						
+
  					* https://docker-curriculum.com/
 					* https://www.katacoda.com/courses/docker
 					* https://training.play-with-docker.com/
@@ -658,30 +648,21 @@
 		</div>
 	</div>
 
-	<script src="js/reveal.js"></script>
+	<script src="static/reveal.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/math/math.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
 
 	<script>
-		// More info about config & dependencies:
-		// - https://github.com/hakimel/reveal.js#configuration
-		// - https://github.com/hakimel/reveal.js#dependencies
 		Reveal.initialize({
-			math: {
-				mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
-				config: 'TeX-AMS_HTML-full', // See http://docs.mathjax.org/en/latest/config-files.html
-			},
+			plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ],
 			menu: { // Menu works best with font-awesome installed: sudo apt-get install fonts-font-awesome
 				themes: false,
 				transitions: false,
 				markers: false,
 				hideMissingTitles: true,
 				keyboard: true,
-			},
-			sequencediagrams: {
-				theme: "simple",
-				useFragments: true,
-				initialize: (function (diagramContainer) {
-					console.log("Diagram rendered!");
-				})
 			},
 			chalkboard: { // font-awesome.min.css must be available
 				// src: "plugin/chalkboard/chalkboard.json",
@@ -707,56 +688,6 @@
 					RevealChalkboard.reset()
 				}, // reset all chalkboard data when 'BACKSPACE' is pressed
 			},
-			dependencies: [{
-					src: 'plugin/markdown/marked.js'
-				},
-				{
-					src: 'plugin/markdown/markdown.js'
-				},
-				{
-					src: 'plugin/notes/notes.js',
-					async: true
-				},
-				{
-					src: 'plugin/math/math.js',
-					async: true
-				},
-				{
-					src: 'plugin/highlight/highlight.js',
-					async: true,
-					callback: function () {
-						hljs.initHighlightingOnLoad();
-					}
-				},
-				{
-					src: 'plugin/sequence-diagrams/webfont.js'
-				},
-				{
-					src: 'plugin/sequence-diagrams/snap.svg-min.js'
-				},
-				{
-					src: 'plugin/sequence-diagrams/underscore-min.js'
-				},
-				{
-					src: 'plugin/sequence-diagrams/sequence-diagram-min.js'
-				},
-				{
-					src: 'plugin/sequence-diagrams/sequence-diagrams-plugin.js'
-				},
-				{
-					src: 'plugin/zoom-js/zoom.js',
-					async: true
-				},
-				{
-					src: 'plugin/spreadsheet/spreadsheet.js'
-				},
-				{
-					src: 'plugin/menu/menu.js'
-				},
-				{
-					src: 'plugin/chalkboard/chalkboard.js'
-				},
-			]
 		});
 	</script>
 </body>

@@ -7,21 +7,11 @@
 
 	<title>Machine Learning Quick Start</title>
 
-	<link rel="stylesheet" href="css/reset.css">
-	<link rel="stylesheet" href="css/reveal.css">
-	<link rel="stylesheet" href="css/theme/league.css">
+	<link rel="stylesheet" href="static/reveal.css">
+	<link rel="stylesheet" href="static/theme/black.css">
 
 	<!-- Theme used for syntax highlighting of code -->
 	<link rel="stylesheet" href="lib/css/monokai.css">
-
-	<!-- Printing and PDF exports -->
-	<script>
-		var link = document.createElement('link');
-		link.rel = 'stylesheet';
-		link.type = 'text/css';
-		link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-		document.getElementsByTagName('head')[0].appendChild(link);
-	</script>
 
 	<!-- ruleJS -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -46,7 +36,7 @@
 				<section data-markdown>
 					<script type="text/template">
 						## 房价预测问题（Andrew NG）
-						
+
 						| Size of feets^2 (x) | Price($) in 1000's (y) |
 						| ------------------- | ---------------------- |
 						| 2104                | 460                    |
@@ -77,9 +67,9 @@
 						为了方便理解，这里用直线y = ax
 
 						但这条直线可能不过（0.0），所以加一个位移变成：
-						
+
 						y = ax + b
-						
+
 						再替换一下变量名就是上面公式
 
 						如何能准确但预测房价，转换成“如何画一条直线，和房价的点的趋势最契合”
@@ -131,7 +121,7 @@
 				<section data-markdown>
 					<script type="text/template">
 						## 如何计算$\theta$？
-						
+
 						<p class="fragment">
 							真实的情况可能很不规则
 							<img src="images/ml/house-price-prediction-09.png">
@@ -172,7 +162,7 @@
 				<section data-markdown>
 					<script type="text/template">
 						## 梯度下降 Gradient Descent
-						
+
 						![](images/ml/house-price-prediction-10.png)
 
 						`α`：学习率 (Learning Rate)
@@ -181,7 +171,7 @@
 				<section data-markdown>
 					<script type="text/template">
 						## 学习率 learning rate
-						
+
 						![](images/ml/learning-rate.png)
 					</script>
 				</section>
@@ -202,7 +192,7 @@
 						852	2	1	36	178
 						...	...	...	...	...
 						</div>
-						
+
 						`$$ h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ... + \theta_nx_n $$`
 					</script>
 				</section>
@@ -244,7 +234,7 @@
 
 						给定一组数据{x(1), ..., x(m)} 和与其对应的输出{y(1), ..., y(m)}
 						学习到一个模型以描述如何从x预测y
-						
+
 						换句话说，就是需要人工标注的数据
 					</script>
 				</section>
@@ -272,7 +262,7 @@
 				<section data-markdown>
 					<script type="text/template">
 						## 激活函数 Activation Functions
-						
+
 						![](images/ml/activation-functions.png)
 						Note:
 						解释一下激活函数
@@ -348,7 +338,7 @@ avg / total       0.97      0.97      0.97    132909
 					<script type="text/template">
 						## 模型评估 - 分类 - 交叉熵
 
-						$$ H(p, q) = -\sum p(x)\log{q(x)} $$ 
+						$$ H(p, q) = -\sum p(x)\log{q(x)} $$
 					</script>
 				</section>
 			</section>
@@ -362,7 +352,7 @@ avg / total       0.97      0.97      0.97    132909
 						* 决策树 Decision Tree
 						* 朴素贝叶斯 Naive Bayes
 						* 支持向量机 SVM
-						* 神经网络 
+						* 神经网络
 					</script>
 				</section>
 				<section data-markdown>
@@ -384,7 +374,7 @@ avg / total       0.97      0.97      0.97    132909
 				<section data-markdown>
 					<script type="text/template">
 						## 决策树 Decision Tree
-				
+
 						* 名词：熵、信息增益、信息增益率
 						* 模型：特征选择、生成决策树、剪枝
 						* 算法：ID3、C4.5、CART
@@ -395,7 +385,7 @@ avg / total       0.97      0.97      0.97    132909
 				<section data-markdown>
 					<script type="text/template">
 						## 朴素贝叶斯 Naive Bayes
-						
+
 						“朴素”，表示所有特征变量间相互独立，不会影响彼此
 
 						哪个类别相应特征出现得最多，就把它放到哪个类别里
@@ -404,7 +394,7 @@ avg / total       0.97      0.97      0.97    132909
 				<section data-markdown>
 					<script type="text/template">
 						## 支持向量机 SVM
-						
+
 						最大化分类间隔
 
 						![](images/ml/svm.png)
@@ -450,7 +440,7 @@ avg / total       0.97      0.97      0.97    132909
 				<section data-markdown>
 					<script type="text/template">
 						## 无监督学习 Unsupervised Learning
-						
+
 						* 不需要人工标注的数据
 						* 缺少先验知识
 						* 挖掘数据中的规律
@@ -479,7 +469,7 @@ avg / total       0.97      0.97      0.97    132909
 				<section data-markdown>
 					<script type="text/template">
 						## k-means
-				
+
 						![](images/ml/k-means.gif)
 					</script>
 				</section>
@@ -567,7 +557,7 @@ avg / total       0.97      0.97      0.97    132909
 				<section data-markdown>
 					<script type="text/template">
 						## 常用算法
-	
+
 						* Sarsa
 						* Q learning
 						* Policy Gradients
@@ -622,30 +612,21 @@ avg / total       0.97      0.97      0.97    132909
 		</div>
 	</div>
 
-	<script src="js/reveal.js"></script>
+	<script src="static/reveal.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/math/math.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
 
 	<script>
-		// More info about config & dependencies:
-		// - https://github.com/hakimel/reveal.js#configuration
-		// - https://github.com/hakimel/reveal.js#dependencies
 		Reveal.initialize({
-			math: {
-				mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
-				config: 'TeX-AMS_HTML-full', // See http://docs.mathjax.org/en/latest/config-files.html
-			},
+			plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ],
 			menu: { // Menu works best with font-awesome installed: sudo apt-get install fonts-font-awesome
 				themes: false,
 				transitions: false,
 				markers: false,
 				hideMissingTitles: true,
 				keyboard: true,
-			},
-			sequencediagrams: {
-				theme: "simple",
-				useFragments: true,
-				initialize: (function (diagramContainer) {
-					console.log("Diagram rendered!");
-				})
 			},
 			chalkboard: { // font-awesome.min.css must be available
 				// src: "plugin/chalkboard/chalkboard.json",
@@ -670,57 +651,7 @@ avg / total       0.97      0.97      0.97    132909
 				8: function () {
 					RevealChalkboard.reset()
 				}, // reset all chalkboard data when 'BACKSPACE' is pressed
-			},
-			dependencies: [{
-					src: 'plugin/markdown/marked.js'
-				},
-				{
-					src: 'plugin/markdown/markdown.js'
-				},
-				{
-					src: 'plugin/notes/notes.js',
-					async: true
-				},
-				{
-					src: 'plugin/math/math.js',
-					async: true
-				},
-				{
-					src: 'plugin/highlight/highlight.js',
-					async: true,
-					callback: function () {
-						hljs.initHighlightingOnLoad();
-					}
-				},
-				{
-					src: 'plugin/sequence-diagrams/webfont.js'
-				},
-				{
-					src: 'plugin/sequence-diagrams/snap.svg-min.js'
-				},
-				{
-					src: 'plugin/sequence-diagrams/underscore-min.js'
-				},
-				{
-					src: 'plugin/sequence-diagrams/sequence-diagram-min.js'
-				},
-				{
-					src: 'plugin/sequence-diagrams/sequence-diagrams-plugin.js'
-				},
-				{
-					src: 'plugin/zoom-js/zoom.js',
-					async: true
-				},
-				{
-					src: 'plugin/spreadsheet/spreadsheet.js'
-				},
-				{
-					src: 'plugin/menu/menu.js'
-				},
-				{
-					src: 'plugin/chalkboard/chalkboard.js'
-				},
-			]
+			}
 		});
 	</script>
 </body>

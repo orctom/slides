@@ -7,21 +7,11 @@
 
 	<title>Pytorch Lightning</title>
 
-	<link rel="stylesheet" href="css/reset.css" />
-	<link rel="stylesheet" href="css/reveal.css" />
-	<link rel="stylesheet" href="css/theme/night.css" />
+	<link rel="stylesheet" href="static/reveal.css">
+	<link rel="stylesheet" href="static/theme/black.css">
 
 	<!-- Theme used for syntax highlighting of code -->
 	<link rel="stylesheet" href="lib/css/monokai.css" />
-
-	<!-- Printing and PDF exports -->
-	<script>
-		var link = document.createElement("link");
-		link.rel = "stylesheet";
-		link.type = "text/css";
-		link.href = window.location.search.match(/print-pdf/gi) ? "css/print/pdf.css" : "css/print/paper.css";
-		document.getElementsByTagName("head")[0].appendChild(link);
-	</script>
 
 	<!-- ruleJS -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
@@ -495,7 +485,7 @@
 							- ```__getitem__()``` （支持shuffle）
 							- ```__len__()``` （进度条更好看一点）
 						* ```IterableDataset```
-							- ```__iter__()``` 
+							- ```__iter__()```
 							- 支持更大的数据集
 							- 启动速度更快
 							- 需要额外处理`num_worker >= 2`的情况
@@ -518,113 +508,46 @@
 		</div>
 	</div>
 
-	<script src="js/reveal.js"></script>
+	<script src="static/reveal.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/math/math.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
 
 	<script>
-		// More info about config & dependencies:
-		// - https://github.com/hakimel/reveal.js#configuration
-		// - https://github.com/hakimel/reveal.js#dependencies
 		Reveal.initialize({
-			math: {
-				mathjax: "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js",
-				config: "TeX-AMS_HTML-full", // See http://docs.mathjax.org/en/latest/config-files.html
-			},
-			menu: {
-				// Menu works best with font-awesome installed: sudo apt-get install fonts-font-awesome
+			plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ],
+			menu: { // Menu works best with font-awesome installed: sudo apt-get install fonts-font-awesome
 				themes: false,
 				transitions: false,
-				markers: true,
+				markers: false,
 				hideMissingTitles: true,
 				keyboard: true,
 			},
-			sequencediagrams: {
-				theme: "simple",
-				useFragments: true,
-				initialize: function (diagramContainer) {
-					console.log("Diagram rendered!");
-				},
-			},
-			chalkboard: {
-				// font-awesome.min.css must be available
+			chalkboard: { // font-awesome.min.css must be available
 				// src: "plugin/chalkboard/chalkboard.json",
 				src: null,
 				toggleChalkboardButton: {
-					left: "80px",
+					left: "80px"
 				},
 				toggleNotesButton: {
-					left: "130px",
+					left: "130px"
 				},
 			},
 			keyboard: {
 				67: function () {
-					RevealChalkboard.toggleNotesCanvas();
+					RevealChalkboard.toggleNotesCanvas()
 				}, // toggle chalkboard when 'c' is pressed
 				66: function () {
-					RevealChalkboard.toggleChalkboard();
+					RevealChalkboard.toggleChalkboard()
 				}, // toggle chalkboard when 'b' is pressed
 				46: function () {
-					RevealChalkboard.clear();
+					RevealChalkboard.clear()
 				}, // clear chalkboard when 'DEL' is pressed
 				8: function () {
-					RevealChalkboard.reset();
+					RevealChalkboard.reset()
 				}, // reset all chalkboard data when 'BACKSPACE' is pressed
-				88: function () {
-					RevealChalkboard.colorNext()
-				}, // cycle colors forward when 'x' is pressed
-				89: function () {
-					RevealChalkboard.colorPrev()
-				}, // cycle colors backward when 'y' is pressed
-			},
-			dependencies: [{
-					src: "plugin/markdown/marked.js",
-				},
-				{
-					src: "plugin/markdown/markdown.js",
-				},
-				{
-					src: "plugin/notes/notes.js",
-					async: true,
-				},
-				{
-					src: "plugin/math/math.js",
-					async: true,
-				},
-				{
-					src: "plugin/highlight/highlight.js",
-					async: true,
-					callback: function () {
-						hljs.initHighlightingOnLoad();
-					},
-				},
-				{
-					src: "plugin/sequence-diagrams/webfont.js",
-				},
-				{
-					src: "plugin/sequence-diagrams/snap.svg-min.js",
-				},
-				{
-					src: "plugin/sequence-diagrams/underscore-min.js",
-				},
-				{
-					src: "plugin/sequence-diagrams/sequence-diagram-min.js",
-				},
-				{
-					src: "plugin/sequence-diagrams/sequence-diagrams-plugin.js",
-				},
-				{
-					src: "plugin/zoom-js/zoom.js",
-					async: true,
-				},
-				{
-					src: "plugin/spreadsheet/spreadsheet.js",
-				},
-				{
-					src: "plugin/menu/menu.js",
-				},
-				{
-					src: "plugin/chalkboard/chalkboard.js",
-				},
-			],
+			}
 		});
 	</script>
 </body>
