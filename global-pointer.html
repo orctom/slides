@@ -44,58 +44,72 @@
 		.align-left {
 			text-align: left;
 		}
+		.report {
+			font-size: 0.6em;
+		}
 	</style>
 </head>
 
 <body>
 	<div class="reveal">
 		<div class="slides">
-            <!--
-			<section data-markdown>
+			<section data-markdown data-background="https://s1.ax1x.com/2022/04/08/L9G8k8.png" data-background-opacity="0.3" data-background-size="contain">
 				<textarea data-template>
-					# Global Pointer 用统一的方式处理嵌套和非嵌套NER
+					# Global Pointer
+					## 用统一的方式处理嵌套和非嵌套NER
 
 					https://spaces.ac.cn/archives/8373
 				</textarea>
 			</section>
 			<section data-markdown>
 				<textarea data-template>
-                    ![](https://s1.ax1x.com/2022/04/08/L9G8k8.png)
-				</textarea>
-			</section>
-			<section data-markdown>
-				<textarea data-template>
 					## 基本思路
 
-					* 要识别文本序列长度为$n$
-					* 该序列有$\frac{n(n+1)}2$个"候选实体"
-					* 从这$\frac{n(n+1)}2$个"候选实体"里边挑出真正的实体
+					<p class="align-left">假设有:</p>
 
-					* m个"$\frac{n(n+1)}2$选k"的多标签分类问题
-					(m:实体类型个数,k:真实的实体)
-					* 复杂度为$O(n^2)$，但这其实是空间上的复杂度，在时间上完全可以并行，可以降到$O(n)$
+					* 长度为$n$的待识别文本序列
+					* 其中有$k$个真实实体
+					* 总共有$m$个实体类型
+
+					<p class="fragment align-left">该序列有$\frac{n(n+1)}2$个"候选实体"</p>
+					<p class="fragment align-left">从这$\frac{n(n+1)}2$个"候选实体"里边挑出真正的实体</p>
+					<p class="fragment align-left">$\Rightarrow$ $m$个"$\frac{n(n+1)}2$选$k$"的多标签分类问题</p>
 				</textarea>
 			</section>
 			<section data-markdown>
 				<script type="text/template">
 					## 数学形式
 
-					<p class="fragment">向量序列 $\left[h1,h2,⋯,hn\right]$, 对于实体$\alpha$</p>
+					向量序列 $\left[h_1,h_2,⋯,h_n\right]$, 对于实体$\alpha$
 					<p class="fragment">$q_{i,\alpha}=W_{q,\alpha}h_i+b_{q,\alpha} \Longrightarrow [q_{1,\alpha},q_{2,\alpha},\cdots,q_{n,\alpha}]$</p>
 					<p class="fragment">$k_{i,\alpha}=W_{k,\alpha}h_i+b_{k,\alpha} \Longrightarrow [k_{1,\alpha},k_{2,\alpha},\cdots,k_{n,\alpha}]$</p>
-					<p class="fragment">$\begin{equation}s_{\alpha}(i,j) = q_{i,\alpha}^{\top}k_{j,\alpha}\label{eq:s}\end{equation}$</p>
-					<p class="fragment">【用$q_{i,\alpha}$与$k_{i,\alpha}$的内积, 作为片段t[i:j]是类型为$\alpha$的实体的打分 (logits)】</p>
+					<p class="fragment">$score_{\alpha}(i,j) = q_{i,\alpha}^{\top}k_{j,\alpha}$</p>
+					<p class="fragment">【用$q_{i,\alpha}$与$k_{i,\alpha}$的内积, 作为片段$t[i:j]$是类型为$\alpha$的实体的打分 (logits)】</p>
 				</script>
 			</section>
-            -->
 			<section>
-				<!--
 				<section data-markdown>
 					<textarea data-template>
 						## 相对位置信息对NER很重要
 
 						* 相对距离（考虑不同长短的句子）
 						* 方向（字词出现的前后顺序）
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						## 位置编码方式
+
+						* 绝对位置编码
+						  - 三角式
+						  - 学习式
+						  - ...
+						* 相对位置编码
+						  - XLNet式
+						  - 复数式
+						  - ...
+
+						https://spaces.ac.cn/archives/8130
 					</textarea>
 				</section>
 				<section data-markdown>
@@ -109,22 +123,6 @@
 						<p class="fragment">学习型位置编码呢？</p>
 					</textarea>
 				</section>
-				<section data-markdown>
-					<textarea data-template>
-						## 位置编码方式
-
-						* 绝对位置编码
-						 - 三角式
-						 - 学习式
-						 - ...
-						* 相对位置编码
-						 - XLNet式
-						 - 复数式
-						 - ...
-
-						https://spaces.ac.cn/archives/8130
-					</textarea>
-				</section>
 				<section data-markdown data-auto-animate>
 					<textarea data-template>
 						## 旋转位置编码
@@ -132,9 +130,9 @@
 						Rotary Position Embedding (RoPE)
 
 						<p class="fragment">构造一个位置编码矩阵$\mathcal{R_i}$，满足关系$\mathcal{R_i^{\top}} \mathcal{R_j} = \mathcal{R_{j-i}}$</p>
-						<p class="fragment">代入$s_{\alpha}(i,j) = q_{i,\alpha}^{\top}k_{j,\alpha}\label{eq:s}$</p>
+						<p class="fragment">代入$s_{\alpha}(i,j) = q_{i,\alpha}^{\top}k_{j,\alpha}$</p>
 						<p class="fragment">
-							$$\begin{equation} \label{eq1}
+							$$\begin{equation}
 							\begin{split}
 							s_{\alpha}(i,j) &= (\mathcal{R_i}q_{i,\alpha})^{\top}(\mathcal{R_j}k_{j,\alpha}) \\
 							                &= q_{i,\alpha}^{\top} \mathcal{R_i^{\top}}\mathcal{R_j}k_{j,\alpha} \\
@@ -146,7 +144,7 @@
 				</section>
 				<section data-markdown data-auto-animate>
 					<textarea data-template>
-						## 旋转位置编码 (2)
+						## 旋转位置编码
 
 						$$s_{\alpha}(i,j) = q_{i,\alpha}^{\top} \mathcal{R_{j-i}}k_{j,\alpha}$$
 						<p class="align-left">也就是说, 给:</p>
@@ -157,32 +155,140 @@
 						https://spaces.ac.cn/archives/8265
 					</textarea>
 				</section>
-				-->
+			</section>
+			<section>
+				<section data-markdown data-auto-animate>
+					<textarea data-template>
+						## 损失函数
+
+						识别特定实体类型α $\Rightarrow$ 共有$\frac{n(n+1)}2$类的多标签分类问题
+						<p class="fragment">最朴素的思路是变成$\frac{n(n+1)}2$个二分类</p>
+						<p class="fragment">n=40 $\Rightarrow$ 820个二分类</p>
+						<p class="fragment">每个句子的实体数很少 $\Rightarrow$ 不均衡</p>
+						<p class="fragment">多分类softmax+ce $\Rightarrow$ 目标类别得分与非目标类别得分的两两比较</p>
+					</textarea>
+				</section>
+				<section data-markdown data-auto-animate>
+					<textarea data-template>
+						## 损失函数
+
+						$$\log \left(1 + \sum\limits_{i\in\Omega_{neg}} e^{s_i}\right) + \log \left(1 + \sum\limits_{j\in\Omega_{pos}} e^{-s_j}\right)$$
+					</textarea>
+				</section>
+				<section data-markdown data-auto-animate>
+					<textarea data-template>
+						## 损失函数
+
+						$$\log \left(1 + \sum\limits_{(i,j)\in P_{\alpha}} e^{-s_{\alpha}(i,j)}\right) + \log \left(1 + \sum\limits_{(i,j)\in Q_{\alpha}} e^{s_{\alpha}(i,j)}\right)$$
+						`$$\begin{aligned}
+							\Omega=&\,\big\{(i,j)\,\big|\,1\leq i\leq j\leq n\big\}\\
+							P_{\alpha}=&\,\big\{(i,j)\,\big|\,t_{[i:j]}\text{是类型为}\alpha\text{的实体}\big\}\\
+							Q_{\alpha}=&\,\Omega - P_{\alpha}
+							\end{aligned}$$`
+					</textarea>
+				</section>
+				<section data-markdown data-auto-animate>
+					<textarea data-template>
+						## 损失函数
+
+						```python
+						def multilabel_categorical_crossentropy(y_true, y_pred):
+							"""y_pred 不用加激活函数, 尤其是不能加sigmoid或者softmax!"""
+							y_pred = (1 - 2 * y_true) * y_pred
+							y_pred_neg = y_pred - y_true * 1e12
+							y_pred_pos = y_pred - (1 - y_true) * 1e12
+							zeros = K.zeros_like(y_pred[..., :1])
+							y_pred_neg = K.concatenate([y_pred_neg, zeros], axis=-1)
+							y_pred_pos = K.concatenate([y_pred_pos, zeros], axis=-1)
+							neg_loss = K.logsumexp(y_pred_neg, axis=-1)
+							pos_loss = K.logsumexp(y_pred_pos, axis=-1)
+							return neg_loss + pos_loss
+						```
+
+						https://spaces.ac.cn/archives/7359
+					</textarea>
+				</section>
+			</section>
+			<section data-markdown>
+				<textarea data-template>
+					## 效果
+
+					<div class="report">
+					$$\begin{array}{c}
+						\text{人民日报NER实验结果} \\
+						{
+							\begin{array}{c|cc|cc}
+							\hline
+							& \text{验证集F1} & \text{测试集F1} & \text{训练速度} & \text{预测速度}\\
+							\hline
+							\text{CRF} & 96.39\% & 95.46\% & 1\text{x} & 1\text{x}\\
+							\text{GlobalPointer (w/o RoPE)} & 54.35\% & 62.59\% & 1.61\text{x} & 1.13\text{x} \\
+							\text{GlobalPointer (w/ RoPE)}& 96.25\% & 95.51\% & 1.56\text{x} & 1.11\text{x} \\
+							\hline
+							\end{array}
+						}
+					\end{array}$$
+					</div>
+					<div class="report">
+					$$\begin{array}{c}
+						\text{CLUENER实验结果} \\
+						{
+							\begin{array}{c|cc|cc}
+							\hline
+							& \text{验证集F1} & \text{测试集F1} & \text{训练速度} & \text{预测速度}\\
+							\hline
+							\text{CRF} & 79.51\% & 78.70\% & 1\text{x} & 1\text{x}\\
+							\text{GlobalPointer}& 80.03\% & 79.44\% & 1.22\text{x} & 1\text{x} \\
+							\hline
+							\end{array}
+						}
+					\end{array}$$
+					</div>
+				</textarea>
+			</section>
+			<section>
 				<section data-markdown>
 					<textarea data-template>
-						## 旋转位置编码 (3)
+						#### code RoPE
+						```python
+						class Rotary(torch.nn.Module):
+						    def __init__(self, dim, base=10000):
+						        super().__init__()
+						        inv_freq = 1.0 / (base ** (torch.arange(0, dim, 2).float() / dim))
+						        self.register_buffer("inv_freq", inv_freq)
+						        self.seq_len_cached = None
+						        self.cos_cached = None
+						        self.sin_cached = None
 
-						$$\begin{array}{c}
-						\text{人民日报NER实验结果} \\
-						{\begin{array}{c|cc|cc}
-						\hline
-						\hline
-						& \text{验证集F1} & \text{测试集F1} & \text{训练速度} & \text{预测速度}
-						\end{array}}
-						\end{array}$$
+						    def forward(self, x, seq_dim=1):
+						        seq_len = x.shape[seq_dim]
+						        if seq_len != self.seq_len_cached:
+						            self.seq_len_cached = seq_len
+						            t = torch.arange(x.shape[seq_dim], device=x.device).type_as(self.inv_freq)
+						            freqs = torch.einsum("i,j->ij", t, self.inv_freq)
+						            emb = torch.cat((freqs, freqs), dim=-1).to(x.device)
+						            self.cos_cached = emb.cos()[:, None, None, :]
+						            self.sin_cached = emb.sin()[:, None, None, :]
+						        return self.cos_cached, self.sin_cached
 
-						$$\begin{array}{c}
-						\text{人民日报NER实验结果} \\
-						{\begin{array}{c|cc|cc}
-						\hline
-						& \text{验证集F1} & \text{测试集F1} & \text{训练速度} & \text{预测速度}\\
-						\hline
-						\text{CRF} & 96.39\% & 95.46\% & 1\text{x} & 1\text{x}\\
-						\text{GlobalPointer (w/o RoPE)} & 54.35\% & 62.59\% & 1.61\text{x} & 1.13\text{x} \\
-						\text{GlobalPointer (w/ RoPE)}& 96.25\% & 95.51\% & 1.56\text{x} & 1.11\text{x} \\
-						\hline
-						\end{array}}
-						\end{array}$$
+						def rotate_half(x):
+						    x1, x2 = x[..., : x.shape[-1] // 2], x[..., x.shape[-1] // 2 :]
+						    return torch.cat(
+						        (-x2, x1), dim=x1.ndim - 1
+						    )  # dim=-1 triggers a bug in torch < 1.8.0
+
+						@torch.jit.script
+						def apply_rotary_pos_emb(q, k, cos, sin):
+						    return (q * cos) + (rotate_half(q) * sin), (k * cos) + (rotate_half(k) * sin)
+						```
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						#### code GlobalPointer
+
+						https://github.com/bojone/bert4keras/blob/master/bert4keras/layers.py#L1388
+
 					</textarea>
 				</section>
 			</section>
@@ -202,7 +308,7 @@
 
 	<script>
 		Reveal.initialize({
-			plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath ]
+			plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
 		});
 	</script>
 </body>
