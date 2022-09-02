@@ -9,6 +9,8 @@
 
 	<link rel="stylesheet" href="static/reveal.css">
 	<link rel="stylesheet" href="static/theme/black.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
 
 	<!-- Theme used for syntax highlighting of code -->
 	<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -45,7 +47,13 @@
 			text-align: left;
 		}
 		.report {
-			font-size: 0.6em;
+			font-size: 0.5em;
+		}
+		.code-wrapper {
+			width: 105% !important;
+		}
+		.code-wrapper code {
+			max-height: 570px !important;
 		}
 	</style>
 </head>
@@ -65,14 +73,14 @@
 				<textarea data-template>
 					## 基本思路
 
-					<p class="align-left">假设有:</p>
+					<p class="align-left">已知有:</p>
 
 					* 长度为$n$的待识别文本序列
 					* 其中有$k$个真实实体
 					* 总共有$m$个实体类型
 
 					<p class="fragment align-left">该序列有$\frac{n(n+1)}2$个"候选实体"</p>
-					<p class="fragment align-left">从这$\frac{n(n+1)}2$个"候选实体"里边挑出真正的实体</p>
+					<p class="fragment align-left">从这$\frac{n(n+1)}2$个"候选实体"里边挑出真实实体</p>
 					<p class="fragment align-left">$\Rightarrow$ $m$个"$\frac{n(n+1)}2$选$k$"的多标签分类问题</p>
 				</textarea>
 			</section>
@@ -83,17 +91,28 @@
 					向量序列 $\left[h_1,h_2,⋯,h_n\right]$, 对于实体$\alpha$
 					<p class="fragment">$q_{i,\alpha}=W_{q,\alpha}h_i+b_{q,\alpha} \Longrightarrow [q_{1,\alpha},q_{2,\alpha},\cdots,q_{n,\alpha}]$</p>
 					<p class="fragment">$k_{i,\alpha}=W_{k,\alpha}h_i+b_{k,\alpha} \Longrightarrow [k_{1,\alpha},k_{2,\alpha},\cdots,k_{n,\alpha}]$</p>
-					<p class="fragment">$score_{\alpha}(i,j) = q_{i,\alpha}^{\top}k_{j,\alpha}$</p>
+					<p class="fragment">$s_{\alpha}(i,j) = q_{i,\alpha}^{\top}k_{j,\alpha}$</p>
 					<p class="fragment">【用$q_{i,\alpha}$与$k_{i,\alpha}$的内积, 作为片段$t[i:j]$是类型为$\alpha$的实体的打分 (logits)】</p>
 				</script>
 			</section>
 			<section>
-				<section data-markdown>
+				<section data-markdown data-auto-animate>
 					<textarea data-template>
 						## 相对位置信息对NER很重要
 
 						* 相对距离（考虑不同长短的句子）
 						* 方向（字词出现的前后顺序）
+					</textarea>
+				</section>
+				<section data-markdown data-auto-animate>
+					<textarea data-template>
+						## 相对位置信息对NER很重要
+
+						![](https://pic4.zhimg.com/80/v2-640b49e6c36a8fa577a32defd7a16cab_720w.jpg)
+
+						$$PE_t^{\top} PE_{t+k} = PE_t^{\top} PE_{t-k}$$
+
+						TENER https://arxiv.org/abs/1911.04474
 					</textarea>
 				</section>
 				<section data-markdown>
@@ -112,17 +131,6 @@
 						https://spaces.ac.cn/archives/8130
 					</textarea>
 				</section>
-				<section data-markdown>
-					<textarea data-template>
-						## 三角函数位置编码
-
-						![](https://pic4.zhimg.com/80/v2-640b49e6c36a8fa577a32defd7a16cab_720w.jpg)
-
-						$$PE_t^{\top} PE_{t+k} = PE_t^{\top} PE_{t-k}$$
-						https://arxiv.org/abs/1911.04474
-						<p class="fragment">学习型位置编码呢？</p>
-					</textarea>
-				</section>
 				<section data-markdown data-auto-animate>
 					<textarea data-template>
 						## 旋转位置编码
@@ -132,13 +140,11 @@
 						<p class="fragment">构造一个位置编码矩阵$\mathcal{R_i}$，满足关系$\mathcal{R_i^{\top}} \mathcal{R_j} = \mathcal{R_{j-i}}$</p>
 						<p class="fragment">代入$s_{\alpha}(i,j) = q_{i,\alpha}^{\top}k_{j,\alpha}$</p>
 						<p class="fragment">
-							$$\begin{equation}
-							\begin{split}
+							$$\begin{split}
 							s_{\alpha}(i,j) &= (\mathcal{R_i}q_{i,\alpha})^{\top}(\mathcal{R_j}k_{j,\alpha}) \\
 							                &= q_{i,\alpha}^{\top} \mathcal{R_i^{\top}}\mathcal{R_j}k_{j,\alpha} \\
 											&= q_{i,\alpha}^{\top} \mathcal{R_{j-i}}k_{j,\alpha}
-							\end{split}
-							\end{equation}$$
+							\end{split}$$
 						</p>
 					</textarea>
 				</section>
@@ -155,6 +161,70 @@
 						https://spaces.ac.cn/archives/8265
 					</textarea>
 				</section>
+				<section data-markdown>
+					<textarea data-template>
+						```python
+						# RoPE (原作者)
+						def apply_rotary_position_embeddings(sinusoidal, *tensors):
+							"""应用RoPE到tensors中
+							其中，sinusoidal.shape=[b, n, d]，tensors为tensor的列表，而
+							tensor.shape=[b, n, ..., d]。
+							"""
+							assert len(tensors) > 0, 'at least one input tensor'
+							assert all([
+							    K.int_shape(tensor) == K.int_shape(tensors[0]) for tensor in tensors[1:]
+							]), 'all tensors must have the same shape'
+							ndim = K.ndim(tensors[0])
+							sinusoidal = align(sinusoidal, [0, 1, -1], ndim)
+							cos_pos = K.repeat_elements(sinusoidal[..., 1::2], 2, -1)
+							sin_pos = K.repeat_elements(sinusoidal[..., ::2], 2, -1)
+							outputs = []
+							for tensor in tensors:
+							    tensor2 = K.stack([-tensor[..., 1::2], tensor[..., ::2]], ndim)
+							    tensor2 = K.reshape(tensor2, K.shape(tensor))
+							    outputs.append(tensor * cos_pos + tensor2 * sin_pos)
+							return outputs[0] if len(outputs) == 1 else outputs
+						```
+
+						[bert4keras:apply_rotary_position_embeddings()](https://github.com/bojone/bert4keras/blob/0cd0a4a0466f244ecc89bed0218dfeaa80fc2c35/bert4keras/backend.py#L316)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						```python
+						# RoPE (pytorch)
+						class Rotary(torch.nn.Module):
+						    def __init__(self, dim, base=10000):
+						        super().__init__()
+						        inv_freq = 1.0 / (base ** (torch.arange(0, dim, 2).float() / dim))
+						        self.register_buffer("inv_freq", inv_freq)
+						        self.seq_len_cached = None
+						        self.cos_cached = None
+						        self.sin_cached = None
+
+						    def forward(self, x, seq_dim=1):
+						        seq_len = x.shape[seq_dim]
+						        if seq_len != self.seq_len_cached:
+						            self.seq_len_cached = seq_len
+						            t = torch.arange(x.shape[seq_dim], device=x.device).type_as(self.inv_freq)
+						            freqs = torch.einsum("i,j->ij", t, self.inv_freq)
+						            emb = torch.cat((freqs, freqs), dim=-1).to(x.device)
+						            self.cos_cached = emb.cos()[:, None, None, :]
+						            self.sin_cached = emb.sin()[:, None, None, :]
+						        return self.cos_cached, self.sin_cached
+
+						def rotate_half(x):
+						    x1, x2 = x[..., : x.shape[-1] // 2], x[..., x.shape[-1] // 2 :]
+						    return torch.cat(
+						        (-x2, x1), dim=x1.ndim - 1
+						    )  # dim=-1 triggers a bug in torch < 1.8.0
+
+						@torch.jit.script
+						def apply_rotary_pos_emb(q, k, cos, sin):
+						    return (q * cos) + (rotate_half(q) * sin), (k * cos) + (rotate_half(k) * sin)
+						```
+					</textarea>
+				</section>
 			</section>
 			<section>
 				<section data-markdown data-auto-animate>
@@ -165,7 +235,6 @@
 						<p class="fragment">最朴素的思路是变成$\frac{n(n+1)}2$个二分类</p>
 						<p class="fragment">n=40 $\Rightarrow$ 820个二分类</p>
 						<p class="fragment">每个句子的实体数很少 $\Rightarrow$ 不均衡</p>
-						<p class="fragment">多分类softmax+ce $\Rightarrow$ 目标类别得分与非目标类别得分的两两比较</p>
 					</textarea>
 				</section>
 				<section data-markdown data-auto-animate>
@@ -209,10 +278,161 @@
 					</textarea>
 				</section>
 			</section>
+			<section>
+				<section data-markdown>
+					<textarea data-template>
+						```python
+						# GlobalPointer (原作者)
+						class GlobalPointer(Layer):
+							def __init__(
+							    self,
+							    heads,
+							    head_size,
+							    RoPE=True,
+							    use_bias=True,
+							    tril_mask=True,
+							    kernel_initializer='lecun_normal',
+							    **kwargs
+							):
+							    super(GlobalPointer, self).__init__(**kwargs)
+							    self.heads = heads
+							    self.head_size = head_size
+							    self.RoPE = RoPE
+							    self.use_bias = use_bias
+							    self.tril_mask = tril_mask
+							    self.kernel_initializer = initializers.get(kernel_initializer)
+
+							def build(self, input_shape):
+							    super(GlobalPointer, self).build(input_shape)
+							    self.dense = Dense(
+							        units=self.head_size * self.heads * 2,
+							        use_bias=self.use_bias,
+							        kernel_initializer=self.kernel_initializer
+							    )
+
+							def compute_mask(self, inputs, mask=None):
+							    return None
+
+							@recompute_grad
+							def call(self, inputs, mask=None):
+							    # 输入变换
+							    inputs = self.dense(inputs)
+							    inputs = tf.split(inputs, self.heads, axis=-1)
+							    inputs = K.stack(inputs, axis=-2)
+							    qw, kw = inputs[..., :self.head_size], inputs[..., self.head_size:]
+							    # RoPE编码
+							    if self.RoPE:
+							        pos = SinusoidalPositionEmbedding(self.head_size, 'zero')(inputs)
+							        qw, kw = apply_rotary_position_embeddings(pos, qw, kw)
+							    # 计算内积
+							    logits = tf.einsum('bmhd,bnhd->bhmn', qw, kw)
+							    # 排除padding
+							    logits = sequence_masking(logits, mask, '-inf', 2)
+							    logits = sequence_masking(logits, mask, '-inf', 3)
+							    # 排除下三角
+							    if self.tril_mask:
+							        mask = tf.linalg.band_part(K.ones_like(logits), 0, -1)
+							        logits = logits - (1 - mask) * K.infinity()
+							    # scale返回
+							    return logits / self.head_size**0.5
+
+							def compute_output_shape(self, input_shape):
+							    return (input_shape[0], self.heads, input_shape[1], input_shape[1])
+
+							def get_config(self):
+							    config = {
+							        'heads': self.heads,
+							        'head_size': self.head_size,
+							        'RoPE': self.RoPE,
+							        'use_bias': self.use_bias,
+							        'tril_mask': self.tril_mask,
+							        'kernel_initializer':
+							            initializers.serialize(self.kernel_initializer),
+							    }
+							    base_config = super(GlobalPointer, self).get_config()
+							    return dict(list(base_config.items()) + list(config.items()))
+						```
+
+						[bert4keras: GlobalPointer](https://github.com/bojone/bert4keras/blob/master/bert4keras/layers.py#L1388)
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						```python
+						# GlobalPointer (pytorch)
+						class GlobalPointer(nn.Module):
+							def __init__(self, encoder, ent_type_size, inner_dim, RoPE=True):
+							    super().__init__()
+							    self.encoder = encoder
+							    self.ent_type_size = ent_type_size
+							    self.inner_dim = inner_dim
+							    self.hidden_size = encoder.config.hidden_size
+							    self.dense = nn.Linear(self.hidden_size, self.ent_type_size * self.inner_dim * 2)
+							    self.RoPE = RoPE
+
+							def sinusoidal_position_embedding(self, batch_size, seq_len, output_dim):
+							    position_ids = torch.arange(0, seq_len, dtype=torch.float).unsqueeze(-1)
+
+							    indices = torch.arange(0, output_dim // 2, dtype=torch.float)
+							    indices = torch.pow(10000, -2 * indices / output_dim)
+							    embeddings = position_ids * indices
+							    embeddings = torch.stack([torch.sin(embeddings), torch.cos(embeddings)], dim=-1)
+							    embeddings = embeddings.repeat((batch_size, *([1]*len(embeddings.shape))))
+							    embeddings = torch.reshape(embeddings, (batch_size, seq_len, output_dim))
+							    embeddings = embeddings.to(self.device)
+							    return embeddings
+
+							def forward(self, input_ids, attention_mask, token_type_ids):
+							    self.device = input_ids.device
+
+							    context_outputs = self.encoder(input_ids, attention_mask, token_type_ids)
+							    # last_hidden_state:(batch_size, seq_len, hidden_size)
+							    last_hidden_state = context_outputs[0]
+
+							    batch_size = last_hidden_state.size()[0]
+							    seq_len = last_hidden_state.size()[1]
+
+							    # outputs:(batch_size, seq_len, ent_type_size*inner_dim*2)
+							    outputs = self.dense(last_hidden_state)
+							    outputs = torch.split(outputs, self.inner_dim * 2, dim=-1)
+							    # outputs:(batch_size, seq_len, ent_type_size, inner_dim*2)
+							    outputs = torch.stack(outputs, dim=-2)
+							    # qw,kw:(batch_size, seq_len, ent_type_size, inner_dim)
+							    qw, kw = outputs[...,:self.inner_dim], outputs[...,self.inner_dim:] # TODO:修改为Linear获取？
+
+							    if self.RoPE:
+							        # pos_emb:(batch_size, seq_len, inner_dim)
+							        pos_emb = self.sinusoidal_position_embedding(batch_size, seq_len, self.inner_dim)
+							        # cos_pos,sin_pos: (batch_size, seq_len, 1, inner_dim)
+							        cos_pos = pos_emb[..., None, 1::2].repeat_interleave(2, dim=-1)
+							        sin_pos = pos_emb[..., None,::2].repeat_interleave(2, dim=-1)
+							        qw2 = torch.stack([-qw[..., 1::2], qw[...,::2]], -1)
+							        qw2 = qw2.reshape(qw.shape)
+							        qw = qw * cos_pos + qw2 * sin_pos
+							        kw2 = torch.stack([-kw[..., 1::2], kw[...,::2]], -1)
+							        kw2 = kw2.reshape(kw.shape)
+							        kw = kw * cos_pos + kw2 * sin_pos
+
+							    # logits:(batch_size, ent_type_size, seq_len, seq_len)
+							    logits = torch.einsum('bmhd,bnhd->bhmn', qw, kw)
+
+							    # padding mask
+							    pad_mask = attention_mask.unsqueeze(1).unsqueeze(1).expand(batch_size, self.ent_type_size, seq_len, seq_len)
+							    # pad_mask_h = attention_mask.unsqueeze(1).unsqueeze(-1).expand(batch_size, self.ent_type_size, seq_len, seq_len)
+							    # pad_mask = pad_mask_v&pad_mask_h
+							    logits = logits*pad_mask - (1-pad_mask)*1e12
+
+							    # 排除下三角
+							    mask = torch.tril(torch.ones_like(logits), -1)
+							    logits = logits - mask * 1e12
+
+							    return logits/self.inner_dim**0.5
+						```
+					</textarea>
+				</section>
+			</section>
 			<section data-markdown>
 				<textarea data-template>
-					## 效果
-
 					<div class="report">
 					$$\begin{array}{c}
 						\text{人民日报NER实验结果} \\
@@ -244,53 +464,22 @@
 						}
 					\end{array}$$
 					</div>
+					<div class="report">
+					$$\begin{array}{c}
+						\text{CMeEE实验结果} \\
+						{
+							\begin{array}{c|cc|cc}
+							\hline
+							& \text{验证集F1} & \text{测试集F1} & \text{训练速度} & \text{预测速度}\\
+							\hline
+							\text{CRF} & 63.81\% & 64.39\% & 1\text{x} & 1\text{x}\\
+							\text{GlobalPointer}& 64.84\% & 65.98\% & 1.52\text{x} & 1.13\text{x} \\
+							\hline
+							\end{array}
+						}
+					\end{array}$$
+					</div>
 				</textarea>
-			</section>
-			<section>
-				<section data-markdown>
-					<textarea data-template>
-						#### code RoPE
-						```python
-						class Rotary(torch.nn.Module):
-						    def __init__(self, dim, base=10000):
-						        super().__init__()
-						        inv_freq = 1.0 / (base ** (torch.arange(0, dim, 2).float() / dim))
-						        self.register_buffer("inv_freq", inv_freq)
-						        self.seq_len_cached = None
-						        self.cos_cached = None
-						        self.sin_cached = None
-
-						    def forward(self, x, seq_dim=1):
-						        seq_len = x.shape[seq_dim]
-						        if seq_len != self.seq_len_cached:
-						            self.seq_len_cached = seq_len
-						            t = torch.arange(x.shape[seq_dim], device=x.device).type_as(self.inv_freq)
-						            freqs = torch.einsum("i,j->ij", t, self.inv_freq)
-						            emb = torch.cat((freqs, freqs), dim=-1).to(x.device)
-						            self.cos_cached = emb.cos()[:, None, None, :]
-						            self.sin_cached = emb.sin()[:, None, None, :]
-						        return self.cos_cached, self.sin_cached
-
-						def rotate_half(x):
-						    x1, x2 = x[..., : x.shape[-1] // 2], x[..., x.shape[-1] // 2 :]
-						    return torch.cat(
-						        (-x2, x1), dim=x1.ndim - 1
-						    )  # dim=-1 triggers a bug in torch < 1.8.0
-
-						@torch.jit.script
-						def apply_rotary_pos_emb(q, k, cos, sin):
-						    return (q * cos) + (rotate_half(q) * sin), (k * cos) + (rotate_half(k) * sin)
-						```
-					</textarea>
-				</section>
-				<section data-markdown>
-					<textarea data-template>
-						#### code GlobalPointer
-
-						https://github.com/bojone/bert4keras/blob/master/bert4keras/layers.py#L1388
-
-					</textarea>
-				</section>
 			</section>
 			<section data-markdown>
 				<textarea data-template>
@@ -305,10 +494,16 @@
 	<script src="plugin/notes/notes.js"></script>
 	<script src="plugin/math/math.js"></script>
 	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
 
 	<script>
 		Reveal.initialize({
-			plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX ]
+			chalkboard: { // font-awesome.min.css must be available
+				toggleChalkboardButton: { left: "80px" },
+				toggleNotesButton: { left: "130px" },
+				colorButtons: 5
+			},
+			plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX, RevealChalkboard ]
 		});
 	</script>
 </body>
