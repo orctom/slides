@@ -49,6 +49,9 @@
 		.report {
 			font-size: 0.5em;
 		}
+		.latex-small {
+			font-size: 0.7em;
+		}
 		.code-wrapper {
 			width: 105% !important;
 		}
@@ -100,19 +103,54 @@
 					<textarea data-template>
 						## 相对位置信息对NER很重要
 
-						* 相对距离（考虑不同长短的句子）
+						* 相对距离（词间距与句子长度之间的关系）
 						* 方向（字词出现的前后顺序）
 					</textarea>
 				</section>
 				<section data-markdown data-auto-animate>
 					<textarea data-template>
-						## 相对位置信息对NER很重要
+						## 三角函数位置编码的问题
+
+						<div class="latex-small">
+						$$\begin{split}
+						PE_t^{\top} PE_{t+k} &= \sum_{j=0}^{\frac{d}{2} - 1} \left[\sin(c_jt)\sin(c_j(t+k)) + \cos(c_jt)\cos(c_j(t+k))\right] \\
+											 &= \sum_{j=0}^{\frac{d}{2} - 1} \cos(c_j\left(t-(t+k)\right)) \\
+											 &= \sum_{j=0}^{\frac{d}{2} - 1} \cos(c_jt)
+						\end{split}$$
+						</div>
+					</textarea>
+				</section>
+				<section data-markdown data-auto-animate>
+					<textarea data-template>
+						## 三角函数位置编码的问题
 
 						![](https://pic4.zhimg.com/80/v2-640b49e6c36a8fa577a32defd7a16cab_720w.jpg)
 
 						$$PE_t^{\top} PE_{t+k} = PE_t^{\top} PE_{t-k}$$
+					</textarea>
+				</section>
+				<section data-markdown data-auto-animate>
+					<textarea data-template>
+						## TENER
 
-						TENER https://arxiv.org/abs/1911.04474
+						$$Q,K,V = HW_q,H_{d_k},HW_v$$
+						$$\mathcal{R_{t-j}} = \left[\ldots\sin(\frac{t-j}{10000^{2i/d_k}})\cos(\frac{t-j}{10000^{2i/d_k}})\ldots\right]^{\top}$$
+						$$\mathcal{A_{t,j}^{rel}} = Q_tK_j^{\top} + Q_tR_{t-j}^{\top} + uK_j^{\top} + vR_{t-j}^{\top}$$
+						$$\text{Attn}(Q,K,V) = softmax(\mathcal{A^{rel}})V$$
+					</textarea>
+				</section>
+				<section data-markdown data-auto-animate>
+					<textarea data-template>
+						## TENER
+
+						* t: token index
+						* j: context token index
+						* $Q_t$, $K_j$: query vector for token $t$, key vector for token $j$
+						* $W_q, W_k \in \mathbb{R}^{d \times d_k}$, $H_{d_k} \in \mathbb{R}^{l \times d_k}$, $l = \frac{d}{d_k}$
+						* $u \in \mathbb{R}^{d_k}$, $v \in \mathbb{R}^{d_k}$, 可训练参数
+						* $\mathcal{R_{t-j}} \in \mathbb{R}^{d_k}$ 相对位置编码
+
+						https://arxiv.org/pdf/1911.04474.pdf
 					</textarea>
 				</section>
 				<section data-markdown>
