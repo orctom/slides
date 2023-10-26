@@ -87,7 +87,7 @@
 			<section>
 				<section data-markdown data-auto-animate data-background="images/graph/what.png" data-background-opacity="0.3" data-background-size="contain">
 					<textarea data-template>
-						## 什么是图和网络？
+						## 什么是图？
 
 						<ul>
 							<li class="fragment">图是一种表达关系的数学结构</li>
@@ -117,11 +117,11 @@
 						人们建有七座桥梁连接着不同的陆地
 					</textarea>
 				</section>
-				<section data-markdown data-background="images/graph/7bridges.png">
+				<section data-markdown data-background="images/graph/7bridges.png" data-background-size="contain">
 					<textarea data-template>
 					</textarea>
 				</section>
-				<section data-markdown data-background="images/graph/7bridges.png" data-background-opacity="0.2">
+				<section data-markdown data-background="images/graph/7bridges.png" data-background-opacity="0.2" data-background-size="contain">
 					<textarea data-template>
 						![](images/graph/7bridges-to-graph.png)
 
@@ -130,7 +130,7 @@
 						</p>
 					</textarea>
 				</section>
-				<section data-markdown data-background="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Leonhard_Euler.jpg/800px-Leonhard_Euler.jpg"  data-background-size="contain">
+				<section data-markdown data-background="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Leonhard_Euler.jpg/800px-Leonhard_Euler.jpg" data-background-size="contain">
 					<textarea data-template>
 					</textarea>
 				</section>
@@ -143,6 +143,23 @@
 								{
 									\begin{array}{c|c}
 									\text{V} & \text{vertex/顶点/节点/实体}\\
+									\hline
+									\text{E} & \text{edge/边/关系}\\
+									\end{array}
+								}
+							\end{array}$$
+						</div>
+					</textarea>
+				</section>
+				<section data-markdown data-auto-animate>
+					<textarea data-template>
+						$$G = (V, E)$$
+
+						<div class="report">
+							$$\begin{array}{c}
+								{
+									\begin{array}{c|c}
+									\text{V} & \text{vertex/顶点/实体}\\
 									\hline
 									\text{E} & \text{edge/边/关系}\\
 									\end{array}
@@ -182,12 +199,14 @@
 			<section>
 				<section data-markdown>
 					<textarea data-template>
-						## 一个具体的例子
+						## 图能干什么？
 
 						<ul>
 							<li class="fragment">假如给你：某个时间段内，某地区所有人之间微信转账记录</li>
 							<li class="fragment">挖掘：嫖娼</li>
 						</ul>
+
+						<p class="fragment">在风控领域的应用</p>
 					</textarea>
 				</section>
 				<section data-markdown>
@@ -542,12 +561,14 @@
 			<section>
 				<section data-markdown>
 					<textarea data-template>
-						## 不卷一把显卡？
+						<h2>万物皆网络</h2>
+
+						<h2 class="fragment">万物皆可embedding</h2>
 					</textarea>
 				</section>
 				<section data-markdown>
 					<textarea data-template>
-						### 节点表示（embedding）
+						### embedding之后的好处
 
 						<ul>
 							<li>分类</li>
@@ -561,9 +582,29 @@
 				</section>
 				<section data-markdown>
 					<textarea data-template>
-						### 社区检测
+						### 图的表示
 
+						<ul>
+							<li><a href="https://github.com/wzhe06/Reco-papers/blob/master/Embedding/%5BGraph%20Embedding%5D%20DeepWalk-%20Online%20Learning%20of%20Social%20Representations%20(SBU%202014).pdf" target="_blank">DeepWalk：随机游走构造“句子”，再直接用Word2Vec</a></li>
+							<li><a href="https://github.com/wzhe06/Reco-papers/blob/master/Embedding/%5BNode2vec%5D%20Node2vec%20-%20Scalable%20Feature%20Learning%20for%20Networks%20(Stanford%202016).pdf" target="_blank">Node2Vec：DeepWalk + BFS/DFS（更好的表达网络的同质性）</a></li>
+							<li><a href="https://github.com/wzhe06/Reco-papers/blob/master/Embedding/[LINE]%20LINE%20-%20Large-scale%20Information%20Network%20Embedding%20(MSRA%202015).pdf" target="_blank">LINE - Large-scale Information Network Embedding</a></li>
+							<li><a href="https://github.com/wzhe06/Reco-papers/blob/master/Embedding/%5BSDNE%5D%20Structural%20Deep%20Network%20Embedding%20(THU%202016).pdf" target="_blank">SDNE - Structural Deep Network Embedding</a></li>
+							<li>GCN - Graph Convolutional Networks</li>
+							<li>GraphSAGE - Graph Sample and Aggregate（解决GCN内存的问题）</li>
+							<li>Graph Attention Networks</li>
+							<li>……</li>
+						</ul>
+					</textarea>
+				</section>
+				<section data-markdown>
+					<textarea data-template>
+						### 社区检测（SOTA）
 
+						<a href="https://github.com/Yuzztju/Community-Detection-Papers" target="_blank">
+							https://github.com/Yuzztju/Community-Detection-Papers
+						</a>
+
+						<p class="fragment">没有最好，只有合适</p>
 					</textarea>
 				</section>
 			</section>
@@ -578,6 +619,11 @@
 							<li><a href="https://www.maths.ed.ac.uk/~v1ranick/papers/wilsongraph.pdf" target="_blank">《Introduction to Graph Theory》</a></li>
 							<li><a href="https://meskc.ac.in/wp-content/uploads/2018/12/A-Textbook-of-Graph-Theory-R.-Balakrishnan-K.-Ranganathan.pdf" target="_blank">《A Textbook of Graph Theory》</a></li>
 							<li><a href="https://distill.pub/2021/gnn-intro/" target="_blank">A Gentle Introduction to Graph Neural Networks</a></li>
+							<li><a href="https://arxiv.org/pdf/1812.08434.pdf" target="_blank">[arxiv] Graph Neural Networks: A Review of Methods and Applications</a></li>
+							<li><a href="https://arxiv.org/pdf/1901.00596.pdf" target="_blank">[arxiv] A Comprehensive Survey on Graph Neural Networks</a></li>
+							<li><a href="https://arxiv.org/pdf/1812.04202.pdf" target="_blank">[arxiv] Deep Learning on Graphs: A Survey</a></li>
+							<li><a href="https://github.com/thunlp/GNNPapers/blob/master/README.md" target="_blank">GNN Papers</a></li>
+							<li><a href="" target="_blank"></a></li>
 						</ul>
 					</textarea>
 				</section>
