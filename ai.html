@@ -1,0 +1,296 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Global Pointer</title>
+
+	<link rel="stylesheet" href="static/reveal.css">
+	<link rel="stylesheet" href="static/theme/black.css">
+	<link rel="stylesheet" href="plugin/chalkboard/style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<style>
+		line {
+			stroke: white;
+		}
+
+		marker {
+			stroke: white;
+			fill: white;
+		}
+
+		.signal text {
+			fill: white;
+		}
+
+		.signal text:hover {
+			fill: white;
+		}
+
+		.actor rect,
+		.actor path {
+			fill: white;
+		}
+
+		.note rect,
+		.note path {
+			fill: white;
+		}
+
+		.align-left {
+			text-align: left;
+		}
+
+		.report {
+			font-size: 0.5em;
+		}
+
+		.latex-small {
+			font-size: 0.7em;
+		}
+
+		.code-wrapper {
+			width: 105% !important;
+		}
+
+		.code-wrapper code {
+			max-height: 570px !important;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<!--
+			<section data-markdown data-background="images/ml/bg.jpeg">
+				<script type="text/template">
+					# AI简介
+				</script>
+			</section>
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+                        <code>f(x) = ax + b</code>
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 房价预测问题（Andrew NG）
+
+						| x: 面积($feet^2$)   | y: 价格($1000$$)       |
+						| ------------------- | ---------------------- |
+						| 2104                | 460                    |
+						| 1416                | 232                    |
+						| 1534                | 315                    |
+						| ...                 | ...                    |
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						![](images/ml/house-price-prediction-02.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						<img src="images/ml/house-price-prediction-03.png" width="400" height="270">
+
+						$$ h_\theta(x) = \theta_0 + \theta_1x $$
+						$$ J(\theta_0, \theta_1) = \displaystyle \sum_{i=1}^m \left (h_\theta (x_{i}) - y_{i} \right)^2 $$
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						![](images/ml/house-price-prediction-05.png)
+
+						假设穷尽所有的$\theta_0, \theta_1$的组合，计算$J(\theta)$，并画出来
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						* 随机的选择$\theta_0, \theta_1$的值
+						* 分别调整$\theta_0, \theta_1$的值（斜率/偏导）
+						* 迭代
+						* 当$J(\theta)$的值不再减小的时候停止计算
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						![](images/ml/cost-function-iter.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 考虑更多因素(features)
+
+						| 面积($feet^2$)  | 卧室数   | 层数 | 房龄 | 价格($1000$$)  |
+						| --------------- | -------- | ---- | ---- | -------------- |
+						| 2104            | 5        | 1    | 45   | 460            |
+						| 1416            | 3        | 2    | 40   | 232            |
+						| 1534            | 3        | 2    | 30   | 315            |
+						| 852             | 2        | 2    | 36   | 178            |
+						| ...             | ...      | ...  | ...  | ...            |
+
+						`$$ h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ... + \theta_nx_n $$`
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 考虑更多因素(features)
+						`$$
+						    h_\theta(x) = \theta_0 + \theta_1x \\
+							\downarrow \\
+							h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ... + \theta_nx_n \\
+						$$`
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 考虑非线性
+						`$$
+						    h_\theta(x) = \theta_0 + \theta_1x \\
+							\downarrow \\
+							h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ... + \theta_nx_n \\
+							\downarrow \\
+							h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2^2 + \theta_3x_3^3 + ... + \theta_nx_n^n \\
+						$$`
+					</script>
+				</section>
+				<section data-markdown data-background="images/ml/mountain.jpg">
+					<script type="text/template">
+						![](images/ml/house-price-prediction-04.png)
+					</script>
+				</section>
+			</section>
+            //-->
+			<!---
+                //-->
+			<section>
+				<section data-markdown data-background="images/ml/algorithms.png" data-background-size="contain">
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Bias vs Variance
+
+						* Bias: 模型预测值和真实值之间的差距
+						* Variance: 给定数据点的模型预测的可变性
+
+						![](images/ml/fitting.png)
+					</script>
+				</section>
+			</section>
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						## 神经网络
+
+						![](images/ml/nn.png)
+					</script>
+				</section>
+				<section data-markdown data-background="images/ai/transformer.jpg" data-background-size="contain">
+				</section>
+				<section data-markdown data-background="images/ai/autoregresive-autoencoding.jpeg"
+					data-background-size="contain">
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						![](images/ai/finetuning.png)
+					</script>
+				</section>
+			</section>
+			<section>
+				<section data-markdown>
+					<script type="text/template">
+						## 大模型
+
+						![](images/ai/gpt3-model-size.png)
+					</script>
+				</section>
+
+				<section data-markdown>
+					<script type="text/template">
+						## 训练
+
+						- Pre-training：预测下一个词
+						- Instruction Fine-Tuning / Supervised Fine-Tuning（SFT）：构造好的问答
+						- Safety / RLHF：安全、伦理……对齐
+					</script>
+				</section>
+				<section data-markdown data-background="images/ai/instruction-tuning.jpg" data-background-size="contain">
+				</section>
+				<section>
+					<section data-markdown>
+						<script type="text/template">
+							## 幻觉
+
+							- 训练数据里没有的信息，没学过的、实效性的
+							- 数学运算
+							- 。。。
+
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							## in context learning / few-shot prompting
+
+							![](images/ai/in-context-learning.png)
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							## 思维链 Chain of Thought
+
+							![](images/ai/cot.png)
+						</script>
+					</section>
+					<section data-markdown>
+						<script type="text/template">
+							## RAG
+
+						</script>
+					</section>
+				</section>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					## 多模态大模型
+
+					- 视觉能力
+					- 听觉能力
+				</script>
+			</section>
+			<section data-markdown>
+				<script type="text/template">
+					f(x) = ax + b
+				</script>
+			</section>
+		</div>
+	</div>
+
+	<script src="static/reveal.js"></script>
+	<script src="plugin/markdown/markdown.js"></script>
+	<script src="plugin/notes/notes.js"></script>
+	<script src="plugin/math/math.js"></script>
+	<script src="plugin/mermaid/mermaid.js"></script>
+	<script src="plugin/highlight/highlight.js"></script>
+	<script src="plugin/chalkboard/plugin.js"></script>
+
+	<script>
+		Reveal.initialize({
+			chalkboard: { // font-awesome.min.css must be available
+				toggleChalkboardButton: { left: "80px" },
+				toggleNotesButton: { left: "130px" },
+				colorButtons: 5
+			},
+			plugins: [RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX, RevealChalkboard]
+		});
+	</script>
+</body>
+
+</html>
