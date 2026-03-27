@@ -62,6 +62,10 @@
 		.code-wrapper code {
 			max-height: 570px !important;
 		}
+
+		.compact table {
+      font-size: .7em
+    }
 	</style>
 </head>
 
@@ -69,6 +73,7 @@
 	<div class="reveal">
 		<div class="slides">
 			<!--
+      //-->
 			<section data-markdown data-background="images/ml/bg.jpeg">
 				<script type="text/template">
 					# AI简介
@@ -77,14 +82,14 @@
 			<section>
 				<section data-markdown>
 					<script type="text/template">
-                        <code>f(x) = ax + b</code>
+              <code>f(x) = ax + b</code>
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
 						## 房价预测问题（Andrew NG）
 
-						| x: 面积($feet^2$)   | y: 价格($1000$$)       |
+						| x: 面积($feet^2$)    | y: 价格($1000$$)       |
 						| ------------------- | ---------------------- |
 						| 2104                | 460                    |
 						| 1416                | 232                    |
@@ -99,8 +104,14 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						<img src="images/ml/house-price-prediction-03.png" width="400" height="270">
-
+						<img src="images/ml/house-price-prediction-03.png">
+					</script>
+				</section>
+				<section data-markdown
+					data-background="images/ml/house-price-prediction-03.png"
+					data-background-opacity="0.3"
+					data-background-size="80%">
+					<script type="text/template">
 						$$ h_\theta(x) = \theta_0 + \theta_1x $$
 						$$ J(\theta_0, \theta_1) = \displaystyle \sum_{i=1}^m \left (h_\theta (x_{i}) - y_{i} \right)^2 $$
 					</script>
@@ -112,12 +123,29 @@
 						假设穷尽所有的$\theta_0, \theta_1$的组合，计算$J(\theta)$，并画出来
 					</script>
 				</section>
-				<section data-markdown>
+				<section data-markdown
+					data-background="images/ml/house-price-prediction-05.png"
+					data-background-opacity="0.3"
+					data-background-size="contain">
 					<script type="text/template">
 						* 随机的选择$\theta_0, \theta_1$的值
 						* 分别调整$\theta_0, \theta_1$的值（斜率/偏导）
 						* 迭代
 						* 当$J(\theta)$的值不再减小的时候停止计算
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						![](images/ml/gradient-descent.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 梯度下降
+
+						![](images/ml/house-price-prediction-10.png)
+
+						`α`：学习率 (Learning Rate)
 					</script>
 				</section>
 				<section data-markdown>
@@ -129,50 +157,30 @@
 					<script type="text/template">
 						## 考虑更多因素(features)
 
-						| 面积($feet^2$)  | 卧室数   | 层数 | 房龄 | 价格($1000$$)  |
+						| 面积($feet^2$)   | 卧室数    | 层数  | 房龄 | 价格($1000$$)   |
 						| --------------- | -------- | ---- | ---- | -------------- |
 						| 2104            | 5        | 1    | 45   | 460            |
 						| 1416            | 3        | 2    | 40   | 232            |
 						| 1534            | 3        | 2    | 30   | 315            |
 						| 852             | 2        | 2    | 36   | 178            |
 						| ...             | ...      | ...  | ...  | ...            |
-
-						`$$ h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ... + \theta_nx_n $$`
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## 考虑更多因素(features)
-						`$$
-						    h_\theta(x) = \theta_0 + \theta_1x \\
-							\downarrow \\
-							h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ... + \theta_nx_n \\
-						$$`
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## 考虑非线性
-						`$$
-						    h_\theta(x) = \theta_0 + \theta_1x \\
-							\downarrow \\
-							h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ... + \theta_nx_n \\
-							\downarrow \\
-							h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2^2 + \theta_3x_3^3 + ... + \theta_nx_n^n \\
-						$$`
+						$$h_\theta(x) = \theta_0 + \theta_1x$$
+						$$\downarrow$$
+						$$h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2 + \theta_3x_3 + ... + \theta_nx_n$$
+						<p class="fragment">
+							$$\downarrow$$
+							$$h_\theta(x) = \theta_0 + \theta_1x_1 + \theta_2x_2^2 + \theta_3x_3^3 + ... + \theta_nx_n^n$$
+						</p>
 					</script>
 				</section>
 				<section data-markdown data-background="images/ml/mountain.jpg">
 					<script type="text/template">
 						![](images/ml/house-price-prediction-04.png)
 					</script>
-				</section>
-			</section>
-            //-->
-			<!---
-                //-->
-			<section>
-				<section data-markdown data-background="images/ml/algorithms.png" data-background-size="contain">
 				</section>
 				<section data-markdown>
 					<script type="text/template">
@@ -184,8 +192,6 @@
 						![](images/ml/fitting.png)
 					</script>
 				</section>
-			</section>
-			<section>
 				<section data-markdown>
 					<script type="text/template">
 						## 神经网络
@@ -193,82 +199,234 @@
 						![](images/ml/nn.png)
 					</script>
 				</section>
-				<section data-markdown data-background="images/ai/transformer.jpg" data-background-size="contain">
-				</section>
+			</section>
+			<section>
 				<section data-markdown data-background="images/ai/autoregresive-autoencoding.jpeg"
+					data-background-size="contain">
+				</section>
+				<section data-markdown data-background="images/ai/transformer.jpg"
+					data-background-size="contain">
+				</section>
+				<section data-markdown data-background="images/ai/emergent-behavior.png"
+					data-background-size="contain">
+				</section>
+				<section data-markdown data-background="images/ai/gpt3-model-size.png"
 					data-background-size="contain">
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						![](images/ai/finetuning.png)
+						## scaling law
+						![](images/ai/scaling-law.png)
+					</script>
+				</section>
+				<section data-markdown class="compact">
+					<script type="text/template">
+						| LLM | #params | L | d | #Heads (Q/KV) |
+						| :--- | :--- | :--- | :--- | :--- |
+						| GPT-1 | 0.117B | 12 | 768 | 12/12 |
+						| GPT-2 | 1.5B | 48 | 1,600 | 25/25 |
+						| GPT-3 | 175B | 96 | 12,288 | 96/96 |
+						| LLaMA2 70B  | 70B | 80 | 8,192 | 64/64 |
+						| LLaMA3 405B | 405B | 126 | 16,384 | 128/8 |
+						| Qwen2.5 0.5B | 0.5B | 24 | 896 | 14/2 |
+						| Qwen2.5 7B  | 7B | 28 | 3,584 | 28/4 |
+						| Qwen2.5 72B | 72B | 80 | 8,192 | 64/8 |
+						| DeepSeek-V3  | 671B | 61 | 7,168 | 128/128 |
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## gpt2
+						<img src="images/ai/gpt2-architecture.png" height="500px">
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## llama
+						<img src="images/ai/llama-architecture.png" height="500px">
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## qwen3-omni
+						<img src="images/ai/qwen3-omni-architecture.png" height="500px">
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 大模型输出的问题
+
+						- 捏造信息，还特别笃定
+						- 知识时效性滞后
+						- 数学运算
+						- 价值对齐漏洞
+						- 前后逻辑矛盾
+
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## in context learning / few-shot prompting
+
+						![](images/ai/in-context-learning.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 思维链 Chain of Thought
+
+						![](images/ai/cot.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 检索增强生成 RAG
+
+						![](images/ai/rag.png)
 					</script>
 				</section>
 			</section>
 			<section>
 				<section data-markdown>
 					<script type="text/template">
-						## 大模型
-
-						![](images/ai/gpt3-model-size.png)
+						| 模型           | 训练花费       |
+						| -------------- | ------------ |
+						| Gemini Ultra   | $191 million |
+						| GPT-4          | $78 million  |
+						| Llama 3.1 405B | $170 million |
+						| Grok-2         | $107 million |
+						| DeepSeek V3    | $5.6 million |
 					</script>
 				</section>
+				<section data-markdown class="compact">
+					<script type="text/template">
+						## 全参微调显存估计（Qwen3-8B）
 
+						| 模块 | 显存 | 说明 |
+						| ----- | ---- | --- |
+						| 模型参数 (fp16) | 16G | 每个参数2bytes |
+						| 梯度 (fp16) | 16G | 每个参数一个梯度 |
+						| 优化器 (adam) | 64G | 动量+方差 |
+						| 激活值 | 20~40G | 高度依赖 batch size 和序列长度 |
+						| 其他 | ~5G | buffer、通信上下文等 |
+						| 总计 | 120~140G |  |
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## 参数高效微调 PEFT
+
+						- 冻结大部分参数，只训练少部分的参数
+						- 冻结全部参数，新增一个结构，只训练新增加的这部分
+					</script>
+				</section>
+				<section data-markdown data-background="images/ai/peft.jpg"
+					data-background-size="contain">
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						![](images/ai/lora.jpeg)
+					</script>
+				</section>
+			</section>
+			<section>
 				<section data-markdown>
 					<script type="text/template">
 						## 训练
+						![](images/ai/finetuning.png)
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## LLM的训练步骤
 
 						- Pre-training：预测下一个词
 						- Instruction Fine-Tuning / Supervised Fine-Tuning（SFT）：构造好的问答
-						- Safety / RLHF：安全、伦理……对齐
+						- Safety / RLHF：安全、伦理、价值观……对齐
 					</script>
 				</section>
-				<section data-markdown data-background="images/ai/instruction-tuning.jpg" data-background-size="contain">
+				<section data-markdown data-background="images/ai/instruction-tuning.png"
+					data-background-size="contain">
 				</section>
 				<section>
-					<section data-markdown>
-						<script type="text/template">
-							## 幻觉
+					<pre><code># 加载基座模型
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
-							- 训练数据里没有的信息，没学过的、实效性的
-							- 数学运算
-							- 。。。
+model_name = "deepseek-ai/DeepSeek-6B"  # 替换为实际模型ID
+tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained(
+	model_name,
+	device_map="auto",
+	trust_remote_code=True
+)
 
-						</script>
-					</section>
-					<section data-markdown>
-						<script type="text/template">
-							## in context learning / few-shot prompting
+# 初始化LoRA
+from peft import LoraConfig, get_peft_model
+lora_config = LoraConfig(
+	r=16,                # 低秩矩阵的秩
+	lora_alpha=32,       # 缩放因子
+	target_modules=["q_proj", "v_proj"],  # 需微调的层
+	lora_dropout=0.1,    # Dropout概率
+	bias="none",         # 不微调偏置项
+	task_type="CAUSAL_LM"
+)
+model = get_peft_model(model, lora_config)
 
-							![](images/ai/in-context-learning.png)
-						</script>
-					</section>
-					<section data-markdown>
-						<script type="text/template">
-							## 思维链 Chain of Thought
+# 数据集准备与预处理
+from datasets import load_dataset
+dataset = load_dataset("your_dataset_name", split="train")
 
-							![](images/ai/cot.png)
-						</script>
-					</section>
-					<section data-markdown>
-						<script type="text/template">
-							## RAG
+def preprocess_function(examples):
+  return tokenizer(examples["text"], truncation=True, max_length=512)
 
-						</script>
-					</section>
+tokenized_dataset = dataset.map(preprocess_function, batched=True)
+
+# 训练脚本
+from transformers import TrainingArguments, Trainer
+training_args = TrainingArguments(
+	output_dir="./output",
+	per_device_train_batch_size=4,
+	gradient_accumulation_steps=4,  # 模拟更大的batch_size
+	num_train_epochs=3,
+	learning_rate=5e-5,
+	fp16=True,  # 混合精度训练
+	logging_steps=10,
+	save_steps=500,
+	report_to="none"
+)
+trainer = Trainer(
+	model=model,
+	args=training_args,
+	train_dataset=tokenized_dataset,
+)
+
+# 开始训练
+trainer.train()
+
+# 模型导出
+model.save_pretrained("./lora_output")
+
+# 合并权重（可选）
+from peft import PeftModel
+base_model = AutoModelForCausalLM.from_pretrained(model_name)
+lora_model = PeftModel.from_pretrained(base_model, "./lora_output", device_map="auto")
+merged_model = lora_model.merge_and_unload()
+merged_model.save_pretrained("./merged_model")
+
+# 一个例子： https://bbs.huaweicloud.com/blogs/457634
+# sample data:
+# 	{"nums": [33,2,63,21], "target": 24, "solution": "33*2-(63-21)=24"},
+#  	{"nums": [1,87,30,66], "target": 52, "solution": "((1+87)+30)-66=52"},
+
+# 另一个例子的sample data：
+# 	{"instruction": "你是谁？", "output": "家父是大理寺少卿甄远道。"},
+					</code></pre>
+				</section>
+				<section data-markdown data-background="images/ai/wandb.png"
+					data-background-size="contain">
 				</section>
 			</section>
-			<section data-markdown>
-				<script type="text/template">
-					## 多模态大模型
-
-					- 视觉能力
-					- 听觉能力
-				</script>
-			</section>
-			<section data-markdown>
-				<script type="text/template">
-					f(x) = ax + b
-				</script>
+			<section data-markdown data-background="images/ml/algorithms.png" data-background-size="contain">
 			</section>
 		</div>
 	</div>
